@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Check } from "./icons";
-import { PrimaryButton, SectionHeader } from "./ui";
+import { MeetCallButton, SectionHeader } from "./ui";
 
 const included = [
   "A full, production-ready working product in 14 days",
@@ -46,7 +46,7 @@ export function Pricing() {
               </li>
             ))}
           </ul>
-          <PrimaryButton className="btn-primary--block">Book a free scope call</PrimaryButton>
+          <MeetCallButton wrapClassName="price-card__cta" className="btn-primary--block" />
         </div>
       </div>
     </section>

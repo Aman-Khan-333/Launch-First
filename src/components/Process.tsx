@@ -1,3 +1,4 @@
+import { CaseStudies } from "./CaseStudies";
 import { Pill } from "./ui";
 
 const steps = [
@@ -25,7 +26,7 @@ const steps = [
 
 export function Process() {
   return (
-    <section className="process" id="process">
+    <section className="process" id="process" data-nav-dark>
       <div className="process__inner container">
         <div className="process__intro">
           <Pill dark>14-Day Process</Pill>
@@ -46,6 +47,7 @@ export function Process() {
           ))}
         </ol>
       </div>
+      <CaseStudies />
     </section>
   );
 }

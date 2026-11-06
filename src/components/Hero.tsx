@@ -1,13 +1,6 @@
 import Image from "next/image";
-import { Check, ChevronRight } from "./icons";
-import { GhostButton, PrimaryButton } from "./ui";
-
-const navLinks = [
-  { label: "Home", href: "#", active: true },
-  { label: "About", href: "#approach" },
-  { label: "Work", href: "#testimonials" },
-  { label: "Pricing", href: "#pricing" },
-];
+import { Check } from "./icons";
+import { MeetCallButton } from "./ui";
 
 // Product cards in design order; the marquee loops through three copies of this set.
 const cards = ["invenci", "visuali", "beneficiary", "flightpath", "safetynexus", "terraive"];
@@ -25,27 +18,6 @@ export function Hero() {
       <section className="hero">
         <Image className="hero__glow" src="/images/hero-glow.png" alt="" width={580} height={676} priority />
 
-        <header className="nav container">
-          <a href="#" className="nav__logo" aria-label="Launch First home">
-            <Image src="/images/logo.png" alt="launch first." width={158} height={26} priority />
-          </a>
-          <nav className="nav__menu" aria-label="Main">
-            {navLinks.map((l) => (
-              <a key={l.label} href={l.href} className={l.active ? "nav__link is-active" : "nav__link"}>
-                {l.label}
-              </a>
-            ))}
-          </nav>
-          <div className="nav__cta">
-            <a href="#get-pricing">
-              <span className="nav__cta-icon" aria-hidden="true">
-                <ChevronRight />
-              </span>
-              Book a Call
-            </a>
-          </div>
-        </header>
-
         <div className="hero__content">
           <h1 className="h1">
             Not a prototype. A working product live in{" "}
@@ -55,13 +27,11 @@ export function Hero() {
             </span>
           </h1>
           <p className="lead hero__lead">
-            A production-ready product you can put in front of users and investors. Fixed scope, fixed price under
-            $10,000, agreed before a single line of code. Built by a dedicated team you talk to directly. You own 100%
-            of the code and IP.
+            A production-ready product you can put in front of users and investors. Fixed scope and price under
+            $10,000, built by a dedicated team. You own 100% of the code and IP.
           </p>
           <div className="hero__actions">
-            <PrimaryButton>Book a free scope call</PrimaryButton>
-            <GhostButton>Book a free scope call</GhostButton>
+            <MeetCallButton />
           </div>
         </div>
 

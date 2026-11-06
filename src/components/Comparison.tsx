@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Check } from "./icons";
-import { GhostButton, SectionHeader } from "./ui";
+import { PrimaryButton, SectionHeader } from "./ui";
 
 const rows = [
   { label: "Timeline", agency: "2–6 months before anything ships", us: "14 days to a live, working product" },
@@ -20,9 +20,9 @@ export function Comparison() {
         lead="The two things that keep founders from committing timeline and trust handled before you start."
       />
       <div className="compare__link">
-        <GhostButton href="#pricing" className="btn-ghost--sm">
+        <PrimaryButton href="#pricing">
           See the exact pricing &amp; process
-        </GhostButton>
+        </PrimaryButton>
       </div>
 
       <div className="compare__stage">

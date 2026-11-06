@@ -110,3 +110,67 @@ export function ClockIcon({ className }: IconProps) {
     />
   );
 }
+
+/** Google Meet logo (brand colours) – marks the scope call as a Meet call */
+export function GoogleMeetLogo({ className }: IconProps) {
+  return (
+    <svg className={className} width="21" height="17" viewBox="0 0 87.5 72" aria-hidden="true">
+      <path fill="#00832d" d="M49.5 36l8.53 9.75 11.47 7.33 2-17.02-2-16.64-11.69 6.44z" />
+      <path fill="#0066da" d="M0 51.5V66c0 3.315 2.685 6 6 6h14.5l3-10.96-3-9.54-9.95-3z" />
+      <path fill="#e94235" d="M20.5 0L0 20.5l10.55 3 9.95-3 2.95-9.41z" />
+      <path fill="#2684fc" d="M20.5 20.5H0v31h20.5z" />
+      <path
+        fill="#00ac47"
+        d="M82.6 8.68L69.5 19.42v33.66l13.16 10.79c1.97 1.54 4.85.135 4.85-2.37V11c0-2.535-2.945-3.925-4.91-2.32zM49.5 36v15.5h-29V72h43c3.315 0 6-2.685 6-6V53.08z"
+      />
+      <path fill="#ffba00" d="M63.5 0h-43v20.5h29V36l20-16.57V6c0-3.315-2.685-6-6-6z" />
+    </svg>
+  );
+}
+
+/* ---------- Filled concern icons ---------- */
+
+/** Crossed-out eye – can't see the quality underneath */
+export function EyeOffIcon({ className }: IconProps) {
+  return (
+    <svg className={className} width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M12 4.5c5.6 0 9.3 4.6 10.4 6.7.27.5.27 1.1 0 1.6-1.1 2.1-4.8 6.7-10.4 6.7S2.7 14.9 1.6 12.8a1.7 1.7 0 0 1 0-1.6C2.7 9.1 6.4 4.5 12 4.5Zm0 4a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"
+      />
+      <path d="m3.5 3.5 17 17" stroke="var(--concern-bg, #fff)" strokeWidth="4.4" strokeLinecap="round" />
+      <path d="m3.5 3.5 17 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Wireframe window – a stripped-down prototype */
+export function WireframeIcon({ className }: IconProps) {
+  return (
+    <FilledIcon
+      className={className}
+      d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 6v10h14V9H5Zm2 2.2h6v2H7v-2Zm0 3.6h4v2H7v-2Z"
+    />
+  );
+}
+
+/** Warning triangle – agency let-downs */
+export function AlertIcon({ className }: IconProps) {
+  return (
+    <FilledIcon
+      className={className}
+      d="M10.27 3.8a2 2 0 0 1 3.46 0l8.12 14a2 2 0 0 1-1.73 3H3.88a2 2 0 0 1-1.73-3l8.12-14ZM11 9v5h2V9h-2Zm0 6.6v2.1h2v-2.1h-2Z"
+    />
+  );
+}
+
+/** Flame – runway burning */
+export function FlameIcon({ className }: IconProps) {
+  return (
+    <FilledIcon
+      className={className}
+      d="M12 22c-4.2 0-7-2.9-7-6.7 0-3.2 2.1-5.5 3.6-7.4.3-.4.9-.2 1 .3.3 1.2.9 2 1.7 2.5.2-2.9 1.9-5.8 4.1-7.6.4-.3.9-.1 1 .4.3 2.8 1.3 4.3 2.4 5.8 1 1.5 1.7 2.9 1.7 5 0 4.6-3.3 7.7-8.5 7.7Zm0-1.8c1.7 0 3-1.5 3-3.5 0-1.1-.5-1.8-.9-2.9-.8.6-1.4 1.5-1.6 2.6-.6-.1-1.1-.5-1.4-1.3-.7.9-1.6 1.8-1.6 3 0 1.2 1.1 2.1 2.5 2.1Z"
+    />
+  );
+}

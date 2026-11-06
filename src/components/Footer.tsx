@@ -11,7 +11,7 @@ const links = [
 export function Footer() {
   return (
     <footer className="footer container">
-      <div className="footer__card">
+      <div className="footer__card" data-nav-dark>
         <div className="footer__brand">
           <Image src="/images/logo-footer.png" alt="launch first." width={321} height={63} />
           <p className="footer__desc">

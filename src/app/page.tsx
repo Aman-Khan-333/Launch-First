@@ -5,6 +5,7 @@ import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
 import { GetPricing } from "@/components/GetPricing";
 import { Hero } from "@/components/Hero";
+import { Nav } from "@/components/Nav";
 import { Pricing } from "@/components/Pricing";
 import { Process } from "@/components/Process";
 import { Testimonials } from "@/components/Testimonials";
@@ -12,6 +13,7 @@ import { Testimonials } from "@/components/Testimonials";
 export default function Home() {
   return (
     <main>
+      <Nav />
       <Hero />
       <Stats />
       <Concerns />
