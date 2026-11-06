@@ -900,7 +900,7 @@ img {
 
 .compare__head img {
   width: 164px;
-  height: 33px;
+  height: auto;
 }
 
 .compare__cells {
@@ -1920,7 +1920,7 @@ img {
 
 .footer__brand img {
   width: 214px;
-  height: 42px;
+  height: auto;
 }
 
 .footer__desc {

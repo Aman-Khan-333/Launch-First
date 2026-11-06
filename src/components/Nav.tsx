@@ -48,9 +48,9 @@ export function Nav() {
       <div className="nav container">
         <a href="#" className="nav__logo" aria-label="Launch First home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="nav__logo-img nav__logo-img--dark" src="/images/logo-nav-dark.png" alt="launch first." width={239} height={42} />
+          <img className="nav__logo-img nav__logo-img--dark" src="/images/logo-black.png" alt="launch first." width={1000} height={173} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="nav__logo-img nav__logo-img--light" src="/images/logo-nav-light.png" alt="" width={239} height={42} />
+          <img className="nav__logo-img nav__logo-img--light" src="/images/logo-white.png" alt="" width={1000} height={173} />
         </a>
         <nav className="nav__menu" aria-label="Main">
           {navLinks.map((l) => (

@@ -52,7 +52,7 @@ export function Comparison() {
 
           <div className="compare__col compare__col--us">
             <div className="compare__head">
-              <Image src="/images/logo-dark-bg.png" alt="Launch First" width={246} height={50} />
+              <Image src="/images/logo-white.png" alt="Launch First" width={1000} height={173} />
             </div>
             <ul className="compare__cells">
               {rows.map((r) => (

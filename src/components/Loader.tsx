@@ -79,7 +79,7 @@ export function Loader() {
         />
       ))}
       <div className="loader__logo">
-        <Image src="/images/logo-on-green.png" alt="" width={321} height={63} priority />
+        <Image src="/images/logo-on-green.png" alt="" width={1000} height={173} priority />
       </div>
     </div>
   );
