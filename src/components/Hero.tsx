@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Check } from "./icons";
+import { Asterisk } from "./icons";
 import { MeetCallButton } from "./ui";
 
 // Product cards in design order; the marquee loops through three copies of this set.
@@ -57,7 +57,7 @@ export function Hero() {
         <ul className="band__list container">
           {promises.map((p) => (
             <li key={p}>
-              <Check className="band__check" />
+              <Asterisk className="band__check" />
               {p}
             </li>
           ))}

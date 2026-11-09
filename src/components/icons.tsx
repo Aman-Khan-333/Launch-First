@@ -16,6 +16,19 @@ export function ChevronDown({ className }: IconProps) {
   );
 }
 
+/** Six-armed asterisk: three rounded bars crossing at the centre (promise band bullets) */
+export function Asterisk({ className }: IconProps) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+      <g fill="currentColor">
+        <rect x="9.6" y="1.5" width="4.8" height="21" rx="2.4" />
+        <rect x="9.6" y="1.5" width="4.8" height="21" rx="2.4" transform="rotate(60 12 12)" />
+        <rect x="9.6" y="1.5" width="4.8" height="21" rx="2.4" transform="rotate(-60 12 12)" />
+      </g>
+    </svg>
+  );
+}
+
 export function Check({ className }: IconProps) {
   return (
     <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">

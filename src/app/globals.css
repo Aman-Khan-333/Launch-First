@@ -613,9 +613,11 @@ img {
 }
 
 .band__check {
-  width: 20px;
-  height: 20px;
-  margin-right: 1px;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-right: 2px;
+  color: #000;
 }
 
 /* ---------- Stats ---------- */
