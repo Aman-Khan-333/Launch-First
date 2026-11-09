@@ -279,6 +279,31 @@ img {
   top: 0;
   left: 0;
   right: 0;
+  transition: transform 0.4s cubic-bezier(0.33, 0, 0.67, 1);
+}
+
+/* Progressive blur behind the bar (phones only, see the 640px breakpoint) */
+.nav-bar__blur {
+  position: absolute;
+  inset: 0 0 -28px;
+  display: none;
+  pointer-events: none;
+}
+
+.nav-bar__blur > div {
+  position: absolute;
+  inset: 0;
+}
+
+/* Tucked away above the viewport while scrolling down */
+.nav-bar.is-hidden {
+  transform: translateY(-110%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-bar {
+    transition: none;
+  }
 }
 
 .nav {
@@ -548,6 +573,12 @@ img {
 @keyframes strip-scroll {
   to {
     transform: translateX(-2636px);
+  }
+}
+
+@keyframes strip-scroll-mobile {
+  to {
+    transform: translateX(-1560px);
   }
 }
 
@@ -2273,7 +2304,7 @@ html.lenis.lenis-stopped {
   }
 
   .hero__content {
-    padding-inline: 16px;
+    padding-inline: 20px;
   }
 
   .approach__grid {
@@ -2315,20 +2346,29 @@ html.lenis.lenis-stopped {
 
   .price-card {
     flex-direction: column;
-    gap: 24px;
-    width: calc(100% - 32px);
+    gap: 10.67px; /* same as the card's inner padding, so the grey note sits just above the white panel */
+    width: calc(100% - 40px);
     height: auto;
   }
 
+  /* Grey note spans the same width as the white panel below (cancels the column's 28px side padding),
+     and its content uses the panel's 28px inset */
   .price-card__note {
     position: static;
     width: auto;
     height: auto;
-    margin: 32px 0 0;
+    margin: 52px -28px 0;
+    padding: 24px 28px;
   }
 
   .price-card__main {
-    padding: 28px;
+    padding: 28px 28px 0;
+  }
+
+  /* "$9,999 (only)" on one line down to 360px wide */
+  .price-card__amount {
+    font-size: 44px;
+    line-height: 52px;
   }
 
   .price-card__panel {
@@ -2354,16 +2394,136 @@ html.lenis.lenis-stopped {
   }
 
   .v-card {
-    flex-basis: calc(100vw - 48px);
+    flex-basis: calc(100vw - 40px);
   }
 
+  /* 20px side gutter on phones */
   .container {
-    max-width: calc(100% - 32px);
+    max-width: calc(100% - 40px);
+  }
+
+  .faq__list {
+    width: calc(100% - 40px);
+  }
+
+  .concerns__closing {
+    padding-inline: 20px;
+  }
+
+  .nav__logo {
+    margin-left: 0;
+  }
+
+  .nav-bar__blur {
+    display: block;
+  }
+
+  /* Stats: one per row as a table: label on the left, figure on the right, divider lines between */
+  .stats__list {
+    row-gap: 0;
+    margin-inline: 20px;
+  }
+
+  .stats__item,
+  .stats__item:first-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "label value";
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: auto;
+    padding: 22px 0;
+    border-left: 0;
+    border-top: 1px solid #c8ccc5;
+    text-align: left;
+  }
+
+  .stats__item:first-child {
+    border-top: 0;
+  }
+
+  /* Equal space above and below the stats: 68px + the rows' 22px padding = 90px either side */
+  .stats {
+    padding-top: 68px;
+  }
+
+  .concerns {
+    padding-top: 68px;
+  }
+
+  .stats__value {
+    grid-area: value;
+  }
+
+  .stats__label {
+    grid-area: label;
+    margin-top: 0;
+  }
+
+  /* Concern cards: drop the desktop height so the icon sits just above the text */
+  .concern {
+    justify-content: flex-start;
+    gap: 16px;
+    min-height: 0;
+  }
+
+  .concern__text {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  /* Promise band: smaller text so each line fits, every row centred */
+  .band__list {
+    align-items: center;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+  }
+
+  .band__list li {
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* First two promises share a row; the third gets its own row below.
+     The pair is ~354px at 12px, so the band runs a little wider than the 20px page gutter. */
+  .band__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 12px;
+    max-width: calc(100% - 20px);
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  .band__list li {
+    gap: 5px;
+  }
+
+  .band__check {
+    width: 13px;
+    height: 13px;
+  }
+
+  .band__list li:last-child {
+    flex-basis: 100%;
+  }
+
+  .band__check {
+    flex: none;
+    width: 14px;
+    height: 14px;
+  }
+
+  .section-header {
+    padding-inline: 20px;
   }
 
   .h1 {
-    font-size: 36px;
-    line-height: 44px;
+    font-size: 42px; /* largest size that still wraps to 3 lines down to 360px wide */
+    line-height: 50px;
   }
 
   .h2 {
@@ -2377,7 +2537,6 @@ html.lenis.lenis-stopped {
   }
 
   .lead {
-    padding-inline: 16px;
     font-size: 16px;
     line-height: 26px;
   }
@@ -2392,13 +2551,31 @@ html.lenis.lenis-stopped {
     padding-right: 0;
   }
 
+  /* Product marquee: back in the flow under the CTA, with smaller cards.
+     One set is 6 × (250px + 10px gap) = 1560px; start on the 2nd copy and slide one set left. */
   .strip {
-    display: none;
+    position: relative;
+    top: auto;
+    height: 248.4px;
+    margin-top: 48px;
+  }
+
+  .strip__track {
+    left: -1560px;
+    gap: 10px;
+    animation-name: strip-scroll-mobile;
+    animation-duration: 54s;
+  }
+
+  .strip__card {
+    width: 250px;
+    height: 248.4px;
+    border-radius: 10px;
   }
 
   .approach__grid {
     grid-template-columns: 1fr;
-    margin-inline: 16px;
+    margin-inline: 20px;
   }
 
   .compare__table {
@@ -2411,7 +2588,16 @@ html.lenis.lenis-stopped {
 
   .footer__bottom {
     flex-direction: column;
+    align-items: center;
     gap: 8px;
-    padding: 0 16px;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+/* Narrow phones (iPhone SE / mini, small Androids): the first two promises only fit on one row at 11px */
+@media (max-width: 385px) {
+  .band__list {
+    font-size: 11px;
   }
 }

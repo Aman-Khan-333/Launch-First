@@ -15,7 +15,7 @@ export function Footer() {
         <div className="footer__brand">
           <Image src="/images/logo-white.png" alt="launch first." width={1000} height={173} />
           <p className="footer__desc">
-            A real, working product in 14 days fixed scope, fixed price under $10,000, agreed before a single line of
+            A real, working product in 14 days fixed scope, fixed price of $9,999 only, agreed before a single line of
             code. You own 100% of the code and IP.
           </p>
           <a className="mail-link mail-link--dark" href="mailto:info@launchfirst.studio">

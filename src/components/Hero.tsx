@@ -27,8 +27,8 @@ export function Hero() {
             </span>
           </h1>
           <p className="lead hero__lead">
-            A production-ready product you can put in front of users and investors. Fixed scope and price under
-            $10,000, built by a dedicated team. You own 100% of the code and IP.
+            A production-ready product you can put in front of users and investors. Fixed scope and price of
+            $9,999 only, built by a dedicated team. You own 100% of the code and IP.
           </p>
           <div className="hero__actions">
             <MeetCallButton />

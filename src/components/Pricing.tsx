@@ -23,10 +23,10 @@ export function Pricing() {
         <div className="price-card__main">
           <p className="price-card__under">Under</p>
           <p className="price-card__amount">
-            $10k <span>(fixed)</span>
+            $9,999 <span>(only)</span>
           </p>
           <p className="price-card__desc">
-            A full 14-day build starting at $4,000, capped under $10,000. The exact number is set with you before any
+            A full 14-day build starting at $4,000, capped at $9,999. The exact number is set with you before any
             code.
           </p>
           <div className="price-card__note">

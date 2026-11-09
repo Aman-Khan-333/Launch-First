@@ -3,7 +3,7 @@ import { SectionHeader } from "./ui";
 
 const stats = [
   { value: "14 days", label: "To a live product" },
-  { value: "$10k", label: "Fixed, capped price" },
+  { value: "$9,999", label: "Fixed, capped price" },
   { value: "100%", label: "Code & IP ownership" },
   { value: "1 team", label: "Dedicated · direct access" },
 ];

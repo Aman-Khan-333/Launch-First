@@ -17,7 +17,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Launch First — A working product live in 14 days",
   description:
-    "A production-ready product you can put in front of users and investors. Fixed scope, fixed price under $10,000.",
+    "A production-ready product you can put in front of users and investors. Fixed scope, fixed price of $9,999 only.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
