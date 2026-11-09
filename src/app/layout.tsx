@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "Launch First — A working product live in 14 days",
   description:
     "A production-ready product you can put in front of users and investors. Fixed scope, fixed price of $9,999 only.",
+  // Served from public/: the app/icon.png convention breaks on the apostrophe in the local folder path.
+  icons: {
+    icon: { url: "/icon.png", type: "image/png" },
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ChevronRight, GoogleMeetLogo } from "./icons";
 
 export function Pill({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
@@ -40,10 +41,20 @@ export function PrimaryButton({
   className?: string;
   icon?: React.ReactNode;
 }) {
-  return (
-    <a href={href} className={`btn-primary ${className}`}>
+  const content = (
+    <>
       <span className="btn-primary__icon">{icon}</span>
       <span className="btn-primary__label">{children}</span>
+    </>
+  );
+  // Links to other pages navigate client-side; in-page anchors stay plain so the smooth scroll handles them.
+  return href.startsWith("/") ? (
+    <Link href={href} className={`btn-primary ${className}`}>
+      {content}
+    </Link>
+  ) : (
+    <a href={href} className={`btn-primary ${className}`}>
+      {content}
     </a>
   );
 }

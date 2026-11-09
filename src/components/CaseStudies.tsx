@@ -1,40 +1,33 @@
 import Image from "next/image";
+import Link from "next/link";
+import { cases, type CaseStudy } from "@/data/cases";
 import { Testimonials } from "./Testimonials";
 import { PrimaryButton, SectionHeader } from "./ui";
 
-// Products we've shipped; screenshots are shared with the hero strip.
-const cases = [
-  {
-    image: "invenci",
-    name: "Invenci",
-    tag: "AI infrastructure",
-  },
-  {
-    image: "visuali",
-    name: "Visuali",
-    tag: "Retail · AI",
-  },
-  {
-    image: "beneficiary",
-    name: "Beneficiary Platform",
-    tag: "Insurance",
-  },
-  {
-    image: "flightpath",
-    name: "Flightpath",
-    tag: "Cybersecurity",
-  },
-  {
-    image: "safetynexus",
-    name: "SafetyNexus",
-    tag: "Social care",
-  },
-  {
-    image: "terraive",
-    name: "Terraive",
-    tag: "Land & planning",
-  },
-];
+/** Screenshot card linking to the project's case study. Used on the home page, /case-studies and the detail pages. */
+export function CaseCard({ c }: { c: CaseStudy }) {
+  return (
+    <li className="case">
+      <Link href={`/case-studies/${c.slug}`} className="case__link">
+        <div className="case__frame">
+          <div className="case__shot">
+            <Image
+              src={`/images/hero/${c.image}.png`}
+              alt={`${c.name} product screenshot`}
+              width={850}
+              height={844}
+              sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 440px"
+            />
+          </div>
+        </div>
+        <div className="case__head">
+          <h3 className="case__name">{c.name}</h3>
+          <span className="case__tag">{c.tag}</span>
+        </div>
+      </Link>
+    </li>
+  );
+}
 
 export function CaseStudies() {
   return (
@@ -53,22 +46,11 @@ export function CaseStudies() {
         </div>
         <ul className="cases__grid container">
           {cases.map((c) => (
-            <li key={c.name} className="case">
-              <div className="case__frame">
-                <div className="case__shot">
-                  <Image src={`/images/hero/${c.image}.png`} alt={`${c.name} product screenshot`} width={850} height={844} sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 440px" />
-                </div>
-              </div>
-              <div className="case__head">
-                <h3 className="case__name">{c.name}</h3>
-                <span className="case__tag">{c.tag}</span>
-              </div>
-            </li>
+            <CaseCard key={c.slug} c={c} />
           ))}
         </ul>
-        {/* TODO: point at the full case studies page once it exists. */}
         <div className="cases__more">
-          <PrimaryButton href="#case-studies" className="btn-primary--light">
+          <PrimaryButton href="/case-studies" className="btn-primary--light">
             View all case studies
           </PrimaryButton>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 // Everything that slides up into place when its section scrolls into view.
@@ -19,8 +20,12 @@ const SELECTOR = [
   // reality check
   ".compare__link",
   ".compare__stage",
-  // case studies
+  // case studies (home + case study pages)
   ".case",
+  ".cs-hero > *",
+  ".cs-meta",
+  ".cs-body__text > *",
+  ".cs-body__media",
   // pricing + testimonials
   ".price-card",
   ".v-card",
@@ -53,6 +58,8 @@ function speedFactor(velocity: number) {
 }
 
 export function ScrollReveal() {
+  const pathname = usePathname();
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -153,7 +160,7 @@ export function ScrollReveal() {
       window.removeEventListener("scroll", trackVelocity);
       window.removeEventListener("loader:exit", start);
     };
-  }, []);
+  }, [pathname]); // client-side navigation brings in new elements to reveal
 
   return null;
 }

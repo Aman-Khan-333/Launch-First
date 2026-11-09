@@ -15,7 +15,7 @@ type VideoTestimonial = {
   video?: string;
 };
 
-// TODO: add each founder's video file (public/videos/...), real name/role, and their own words for quote 6.
+// TODO: add each founder's video file (public/videos/...), real name/role, and their own words for quotes 6 and 7.
 const testimonials: VideoTestimonial[] = [
   {
     title: "Paying users in two weeks",
@@ -56,6 +56,13 @@ const testimonials: VideoTestimonial[] = [
     title: "Straight to the developers",
     quote: "We spoke to the people building our product every day. No account managers, no relay, no surprises.",
     thumb: "/images/testimonials/client-6.jpg",
+    name: "Founder",
+    role: "SAAS Owner",
+  },
+  {
+    title: "Scope we could trust",
+    quote: "The price and the plan were locked before a line of code. Nothing moved except the product, forward.",
+    thumb: "/images/testimonials/client-7.jpg",
     name: "Founder",
     role: "SAAS Owner",
   },

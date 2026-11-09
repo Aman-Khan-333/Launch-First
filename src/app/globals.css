@@ -23,7 +23,7 @@
   --text-80: rgba(0, 0, 0, 0.8);
   --display: "opsz" 32;
   --text: "opsz" 14;
-  /* Dashed 44px grid with dots at the crossings (concerns + comparison backgrounds). */
+  /* Dashed 44px grid with dots at the crossings (comparison background). */
   --grid-dashed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M0 22.5h44M22.5 0v44' stroke='%23000' stroke-opacity='.16' stroke-dasharray='5 4'/%3E%3Ccircle cx='22.5' cy='22.5' r='2' fill='%23000' fill-opacity='.28'/%3E%3C/svg%3E");
 }
 
@@ -385,20 +385,32 @@ img {
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 33.33px;
   height: 45.33px;
-  padding: 0 24px 0 9px;
+  padding: 0 7.5px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.04);
 }
 
-/* Links get a pill-shaped hit area; the negative margin cancels the padding so text stays put. */
+/* The white pill behind the active link; slides from link to link as the reader scrolls. */
+.nav__pill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 30.67px;
+  border-radius: 6px;
+  background: #fff;
+  transition:
+    transform 0.5s cubic-bezier(0.65, 0, 0.35, 1),
+    width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  pointer-events: none;
+}
+
 .nav__link {
+  position: relative;
   display: flex;
   align-items: center;
   height: 30.67px;
-  margin: 0 -14px;
-  padding: 0 14px;
+  padding: 0 19px;
   border-radius: 6px;
   font-size: 14px;
   line-height: 20px;
@@ -414,14 +426,11 @@ img {
 }
 
 .nav__link.is-active {
-  margin: 0;
-  padding: 0 21px;
-  background: #fff;
   color: #000;
 }
 
 .nav__link.is-active:hover {
-  background: #fff;
+  background: transparent;
 }
 
 .nav__cta {
@@ -672,51 +681,28 @@ img {
 
 /* Concern cards: simple tinted card, small filled icon above the concern. */
 .concerns__grid {
-  position: relative;
-  isolation: isolate;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-top: 56px;
-}
-
-/* Dashed grid with dots at the crossings (from the original design), fading out toward the edges. */
-.concerns__grid::before {
-  content: "";
-  position: absolute;
-  inset: -44px -120px -88px;
-  z-index: -1;
-  background: var(--grid-dashed) center top / 44px 44px;
-  -webkit-mask-image: radial-gradient(ellipse 55% 60% at 50% 45%, #000 35%, transparent 100%);
-  mask-image: radial-gradient(ellipse 55% 60% at 50% 45%, #000 35%, transparent 100%);
-  pointer-events: none;
-  transition: opacity 1s cubic-bezier(0.33, 0, 0.67, 1) 0.15s;
-}
-
-/* The grid stays hidden until the cards slide in, then fades in behind them. */
-.concerns__grid:has(.concern.reveal:not(.is-revealed))::before {
-  opacity: 0;
+  margin-top: 44px;
 }
 
 .concern {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 32px;
-  min-height: 300px;
-  padding: 24px;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 28px;
+  border-left: 3px solid #f5a524;
   border-radius: 10px;
   background: var(--tint);
 }
 
 .concern__icon {
+  flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 5px;
-  --concern-bg: #fff;
-  background: var(--concern-bg);
+  /* matches the card so the eye-off slash knocks out cleanly */
+  --concern-bg: var(--tint);
   color: #000;
 }
 
@@ -726,6 +712,7 @@ img {
 }
 
 .concern__text {
+  max-width: 480px;
   font-size: 16px;
   line-height: 25px;
   letter-spacing: -0.01em;
@@ -735,7 +722,7 @@ img {
 
 .concerns__closing {
   max-width: 846px;
-  margin: 64px auto 0;
+  margin: 48px auto 0;
   font-size: 20px;
   line-height: 30px;
   letter-spacing: -0.011em;
@@ -1105,6 +1092,7 @@ img {
 
 .cases {
   position: relative;
+  scroll-margin-top: 110px; /* nav link lands with the label clear of the fixed nav */
 }
 
 .cases .lead {
@@ -2195,9 +2183,6 @@ html.lenis.lenis-stopped {
     display: none;
   }
 
-  .concerns__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 
   .concerns__closing {
     padding-inline: 24px;
@@ -2387,9 +2372,8 @@ html.lenis.lenis-stopped {
 
   /* Concern cards: drop the desktop height so the icon sits just above the text */
   .concern {
-    justify-content: flex-start;
     gap: 16px;
-    min-height: 0;
+    padding: 20px;
   }
 
   .concern__text {
@@ -2524,4 +2508,296 @@ html.lenis.lenis-stopped {
   .band__list {
     font-size: 11px;
   }
+}
+
+/* ---------- Case study pages (/case-studies and /case-studies/[slug]) ---------- */
+
+.case__link {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+}
+
+.cs-hero {
+  padding-top: 176px;
+}
+
+.cs-hero--center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 72px;
+  text-align: center;
+}
+
+.cs-hero__title {
+  margin-top: 20px;
+}
+
+.cs-hero__lead {
+  max-width: 720px;
+  margin-top: 20px;
+  text-wrap: pretty;
+}
+
+.cs-back {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-bottom: 32px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-80);
+  transition: color 0.2s;
+}
+
+.cs-back:hover {
+  color: #000;
+}
+
+.cs-back__icon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--tint);
+  color: #000;
+}
+
+.cs-back__icon svg {
+  width: 12px;
+  height: 12px;
+  transform: rotate(180deg);
+}
+
+.cs-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 56px;
+  border-block: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.cs-meta__item {
+  padding: 22px 0;
+}
+
+.cs-meta__item + .cs-meta__item {
+  padding-left: 24px;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.cs-meta dt {
+  font-size: 13px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.55);
+  font-weight: 500;
+}
+
+.cs-meta dd {
+  margin-top: 4px;
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+.cs-body {
+  position: relative; /* above the header glow where it fades out */
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  align-items: stretch; /* text column runs the full height of the screenshot */
+  gap: 80px;
+  margin-top: 72px;
+  margin-bottom: 120px;
+}
+
+.cs-body__text {
+  display: flex;
+  flex-direction: column;
+}
+
+/* The outcome as a tinted card; the screenshot beside it is cropped to end level with this card */
+.cs-body__end {
+  margin-top: 72px;
+  padding: 24px 28px 26px;
+  border-radius: 12px;
+  background: var(--tint);
+}
+
+.cs-body__end .cs-body__copy {
+  margin-top: 10px;
+}
+
+.cs-body__heading {
+  font-size: 26px;
+  line-height: 34px;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  font-variation-settings: var(--display);
+}
+
+.cs-body__heading:not(:first-child) {
+  margin-top: 48px;
+}
+
+.cs-body__copy {
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  color: var(--text-80);
+  font-weight: 500;
+}
+
+.cs-body__list {
+  margin-top: 16px;
+}
+
+.cs-body__list li {
+  display: flex;
+  gap: 14px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: var(--text-80);
+  font-weight: 500;
+}
+
+.cs-body__list li + li {
+  margin-top: 12px;
+}
+
+.cs-body__check {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  color: #000;
+}
+
+.cs-frame {
+  padding: 10px;
+  border-radius: 16px;
+  background: var(--tint);
+}
+
+/* Desktop: the text column sets the row height and the screenshot fills it, cropped from the bottom */
+.cs-body__media,
+.cs-frame {
+  height: 100%;
+}
+
+.cs-frame__shot {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.cs-frame__shot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+@media (max-width: 1100px) {
+  .cs-body {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+
+  /* Screenshot first on narrower screens, then the story, shown whole */
+  .cs-body__media {
+    order: -1;
+  }
+
+  .cs-frame__shot img {
+    position: static;
+    height: auto;
+  }
+
+  .cs-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cs-meta__item:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .cs-meta__item:nth-child(n + 3) {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (max-width: 640px) {
+  .cs-hero {
+    padding-top: 128px;
+  }
+
+  .cs-hero--center {
+    padding-bottom: 56px;
+  }
+
+  .cs-meta {
+    margin-top: 40px;
+  }
+
+  .cs-meta__item {
+    padding: 16px 0;
+  }
+
+  .cs-meta__item + .cs-meta__item {
+    padding-left: 16px;
+  }
+
+  .cs-meta__item:nth-child(3) {
+    padding-left: 0;
+  }
+
+  .cs-meta dd {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .cs-body {
+    margin-top: 48px;
+    margin-bottom: 96px;
+    gap: 40px;
+  }
+
+  .cs-body__heading {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .cs-body__heading:not(:first-child) {
+    margin-top: 36px;
+  }
+
+  .cs-body__end {
+    margin-top: 32px;
+    padding: 20px;
+  }
+}
+
+/* Listing page: no header inside the dark block, so the grid starts at the section's top padding */
+.cs-list .cases__grid {
+  margin-top: 0;
+}
+
+/* Listing page header: clips the hero glow at the page edge; the header sits above it */
+.cs-top {
+  position: relative;
+  overflow-x: clip; /* the glow runs on under the dark section, which sits above it */
+}
+
+.cs-top > :not(.hero__glow) {
+  position: relative;
 }

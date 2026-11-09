@@ -31,11 +31,11 @@ export function GetPricing() {
               </li>
             ))}
           </ul>
-          <a className="mail-link" href="mailto:info@launchfirst.studio">
+          <a className="mail-link" href="mailto:info@launchfirst.com">
             <span className="mail-link__icon">
               <Mail />
             </span>
-            info@launchfirst.studio
+            info@launchfirst.com
           </a>
         </div>
 

@@ -1,4 +1,4 @@
-import { AlertIcon, ClockIcon, EyeOffIcon, FlameIcon, WireframeIcon } from "./icons";
+import { AlertIcon, ClockIcon, EyeOffIcon, FlameIcon, LockIcon, WireframeIcon } from "./icons";
 import { SectionHeader } from "./ui";
 
 const stats = [
@@ -9,25 +9,14 @@ const stats = [
 ];
 
 const concerns = [
+  { Icon: ClockIcon, text: "I want a working digital product built in weeks, not months for my existing customers." },
+  { Icon: EyeOffIcon, text: "I have no way to check whether what gets handed to me is solid underneath, or just looks finished." },
+  { Icon: WireframeIcon, text: "I want working software, not a stripped-down prototype, ready to put in front of customers." },
+  { Icon: AlertIcon, text: "A previous agency ran over budget, missed the deadline, or went dark mid-build." },
+  { Icon: FlameIcon, text: "I'm weighing $50–80k quotes over 2–6 months while my runway keeps ticking down." },
   {
-    Icon: ClockIcon,
-    text: "I want a working digital product built in weeks, not months for my existing customers.",
-  },
-  {
-    Icon: EyeOffIcon,
-    text: "I have no way to check whether what gets handed to me is solid underneath, or just looks finished.",
-  },
-  {
-    Icon: WireframeIcon,
-    text: "I want working software, not a stripped-down prototype, ready to put in front of customers.",
-  },
-  {
-    Icon: AlertIcon,
-    text: "A previous agency ran over budget, missed the deadline, or went dark mid-build.",
-  },
-  {
-    Icon: FlameIcon,
-    text: "I'm weighing $50–80k quotes over 2–6 months while my runway keeps ticking down.",
+    Icon: LockIcon,
+    text: "I'm worried I won't truly own the code, and every change after launch will mean going back to the same agency.",
   },
 ];
 

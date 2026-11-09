@@ -196,3 +196,13 @@ export function FlameIcon({ className }: IconProps) {
     />
   );
 }
+
+/** Padlock – locked into the agency, not owning the code */
+export function LockIcon({ className }: IconProps) {
+  return (
+    <FilledIcon
+      className={className}
+      d="M12 2a5 5 0 0 1 5 5v2.1h.6A2.4 2.4 0 0 1 20 11.5v8.1a2.4 2.4 0 0 1-2.4 2.4H6.4A2.4 2.4 0 0 1 4 19.6v-8.1a2.4 2.4 0 0 1 2.4-2.4H7V7a5 5 0 0 1 5-5Zm0 10.6a1.7 1.7 0 0 0-1 3.07V17a1 1 0 0 0 2 0v-1.33a1.7 1.7 0 0 0-1-3.07ZM12 4a3 3 0 0 0-3 3v2.1h6V7a3 3 0 0 0-3-3Z"
+    />
+  );
+}
