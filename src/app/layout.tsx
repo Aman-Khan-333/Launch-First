@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { BookingModal } from "@/components/BookingModal";
 import { Loader } from "@/components/Loader";
 import { ProgressiveBlur } from "@/components/ProgressiveBlur";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="site">{children}</div>
         <ProgressiveBlur />
         <ScrollReveal />
+        <BookingModal />
         <Loader />
         <noscript>
           <style>{".loader{display:none}"}</style>

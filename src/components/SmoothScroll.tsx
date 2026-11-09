@@ -37,6 +37,12 @@ export function SmoothScroll() {
     };
     document.addEventListener("click", onClick);
 
+    // Hold the page still behind the booking popup.
+    const pause = () => lenis.stop();
+    const resume = () => lenis.start();
+    window.addEventListener("modal:open", pause);
+    window.addEventListener("modal:close", resume);
+
     // Hold the page still while the loading screen is up.
     if (document.documentElement.classList.contains("is-loading")) {
       lenis.stop();
@@ -45,6 +51,8 @@ export function SmoothScroll() {
 
     return () => {
       document.removeEventListener("click", onClick);
+      window.removeEventListener("modal:open", pause);
+      window.removeEventListener("modal:close", resume);
       lenis.destroy();
       lenisRef.current = null;
     };
