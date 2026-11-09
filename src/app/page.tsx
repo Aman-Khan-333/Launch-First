@@ -1,4 +1,5 @@
 import { Approach } from "@/components/Approach";
+import { CaseStudies } from "@/components/CaseStudies";
 import { Comparison } from "@/components/Comparison";
 import { Concerns, Stats } from "@/components/Concerns";
 import { Faq } from "@/components/Faq";
@@ -17,6 +18,7 @@ export default function Home() {
       <Hero />
       <Stats />
       <Concerns />
+      <CaseStudies />
       <Approach />
       <Comparison />
       <Process />

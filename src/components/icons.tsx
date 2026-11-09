@@ -29,6 +29,15 @@ export function Asterisk({ className }: IconProps) {
   );
 }
 
+/** Cross drawn to match the Check icon's stroke (comparison table, "usual agency" column) */
+export function Cross({ className }: IconProps) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M5.5 5.5 14.5 14.5M14.5 5.5 5.5 14.5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function Check({ className }: IconProps) {
   return (
     <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">

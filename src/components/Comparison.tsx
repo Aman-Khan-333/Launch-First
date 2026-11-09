@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Check } from "./icons";
+import { Check, Cross } from "./icons";
 import { PrimaryButton, SectionHeader } from "./ui";
 
 const rows = [
@@ -42,7 +42,7 @@ export function Comparison() {
               {rows.map((r) => (
                 <li key={r.label}>
                   <span className="compare__check">
-                    <Check />
+                    <Cross />
                   </span>
                   {r.agency}
                 </li>

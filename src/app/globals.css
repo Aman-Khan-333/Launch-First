@@ -981,17 +981,27 @@ img {
 
 /* ---------- 14-day process ---------- */
 
-.process {
+/* Dark rounded blocks with a grain texture: the 14-day process and the case studies */
+.process,
+.cases-section {
   position: relative;
   z-index: 2;
-  padding: 92.7px 0 118.67px; /* bottom matches the gap below the section to the Fixed Cost label */
   overflow: hidden;
   border-radius: 30px;
   background: #000;
   color: #fff;
 }
 
-.process::before {
+.process {
+  padding: 92.7px 0 90.8px;
+}
+
+.cases-section {
+  padding: 92.7px 0 118.67px; /* bottom matches the space above, from the section top to its label */
+}
+
+.process::before,
+.cases-section::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1089,11 +1099,10 @@ img {
 /* ---------- Pricing ---------- */
 
 /* Tucks 30px under the process section so its rounded bottom corners sit on the glow, not bare page. */
-/* ---------- Case studies (inside the dark process section) ---------- */
+/* ---------- Case studies (dark section after the founder concerns) ---------- */
 
 .cases {
   position: relative;
-  margin-top: 120px;
 }
 
 /* Left-aligned header, lined up with the card grid. */

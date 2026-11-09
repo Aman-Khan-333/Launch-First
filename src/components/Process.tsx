@@ -1,4 +1,3 @@
-import { CaseStudies } from "./CaseStudies";
 import { Pill } from "./ui";
 
 const steps = [
@@ -47,7 +46,6 @@ export function Process() {
           ))}
         </ol>
       </div>
-      <CaseStudies />
     </section>
   );
 }
