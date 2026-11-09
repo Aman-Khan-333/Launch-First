@@ -1731,8 +1731,8 @@ img {
 }
 
 .field__control::placeholder {
-  color: #000;
-  opacity: 0.85;
+  color: #9a9a9a;
+  opacity: 1;
 }
 
 .field__control:focus {

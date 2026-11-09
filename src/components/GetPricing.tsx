@@ -43,7 +43,7 @@ export function GetPricing() {
           <div className="form__row">
             <label className="field">
               <span className="field__label">Full name</span>
-              <input className="field__control" name="name" placeholder="Jane Smith" autoComplete="name" />
+              <input className="field__control" name="name" placeholder="Your name" autoComplete="name" />
             </label>
             <label className="field">
               <span className="field__label">Work email</span>
@@ -51,7 +51,7 @@ export function GetPricing() {
                 className="field__control"
                 name="email"
                 type="email"
-                placeholder="jane@gmail.com"
+                placeholder="Your email"
                 autoComplete="email"
               />
             </label>
