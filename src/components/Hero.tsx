@@ -2,9 +2,22 @@ import Image from "next/image";
 import { Asterisk } from "./icons";
 import { MeetCallButton } from "./ui";
 
-// Product cards in design order; the marquee loops through three copies of this set.
-const cards = ["invenci", "visuali", "beneficiary", "flightpath", "safetynexus", "terraive"];
-const marquee = [0, 1, 2].flatMap((copy) => cards.map((name) => ({ key: `${copy}-${name}`, name, copy })));
+// Projects in order; the marquee loops through three copies of this set. Each project shows one name.
+// Products with a web and a mobile app show both screens side by side (the phone card is narrower) under one name.
+const projects = [
+  { name: "Fade", type: "Web & mobile app", images: ["fade-web", "fade-mobile"] },
+  { name: "Kynos", type: "Web app", images: ["kynos"] },
+  { name: "Beneficiary Platform", type: "Dashboard", images: ["beneficiary"] },
+  { name: "Fresh Pass", type: "Web & mobile app", images: ["fresh-pass-web", "fresh-pass-mobile"] },
+  { name: "Flightpath", type: "Dashboard", images: ["flightpath"] },
+  { name: "Data Capture", type: "Dashboard", images: ["data-capture"] },
+  { name: "SafetyNexus", type: "Web app", images: ["safetynexus"] },
+  { name: "Prime Roster", type: "Dashboard", images: ["prime-roaster"] },
+  { name: "Terravive", type: "Web app", images: ["terravive"] },
+];
+const marquee = [0, 1, 2].flatMap((copy) => projects.map((p, i) => ({ ...p, key: `${copy}-${p.name}`, copy, i })));
+// The marquee opens on the 2nd copy; only its first few projects are on screen at load.
+const VISIBLE_AT_LOAD = 4;
 
 const promises = [
   "Fixed scope, fixed price",
@@ -37,17 +50,30 @@ export function Hero() {
 
         <div className="strip" aria-hidden="true">
           <div className="strip__track">
-            {marquee.map((c) => (
-              <Image
-                key={c.key}
-                className="strip__card"
-                src={`/images/hero/${c.name}.png`}
-                alt=""
-                width={850}
-                height={844}
-                sizes="426px"
-                priority={c.copy === 1}
-              />
+            {marquee.map((p) => (
+              <div key={p.key} className="strip__item">
+                <div className="strip__shots">
+                  {p.images.map((img) => {
+                    const mobile = img.endsWith("-mobile");
+                    return (
+                      <Image
+                        key={img}
+                        className={mobile ? "strip__card strip__card--mobile" : "strip__card"}
+                        src={`/images/hero/${img}.png`}
+                        alt=""
+                        width={mobile ? 390 : 850}
+                        height={mobile ? 847 : 844}
+                        sizes={mobile ? "195px" : "426px"}
+                        priority={p.copy === 1 && p.i < VISIBLE_AT_LOAD}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="strip__meta">
+                  <span className="strip__name">{p.name}</span>
+                  <span className="strip__tag">{p.type}</span>
+                </div>
+              </div>
             ))}
           </div>
         </div>

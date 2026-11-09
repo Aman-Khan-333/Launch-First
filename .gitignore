@@ -7,3 +7,6 @@ tsconfig.tsbuildinfo
 
 # Original full-size testimonial stills (the site uses the compressed copies in public/images/testimonials)
 /Testimonials/
+
+# Original case study screenshots (compressed marquee cards live in public/images/hero)
+/Case Studies/

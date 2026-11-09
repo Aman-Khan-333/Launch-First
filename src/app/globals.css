@@ -253,7 +253,7 @@ img {
 .hero {
   position: relative;
   z-index: 1;
-  height: 1130.67px;
+  height: 1164.67px; /* includes the project names under the marquee */
   overflow: hidden;
   border-radius: 0 0 32px 32px;
   background: var(--bg);
@@ -556,21 +556,22 @@ img {
   top: 670.67px;
   left: 0;
   right: 0;
-  height: 422.6px;
+  height: 456.6px; /* cards (422.6px) + name line */
 }
 
 /*
- * Endless marquee: three copies of the 6-card set (6 × 439.33px = 2636px each).
+ * Endless marquee: three copies of the card set. One set = 9 web cards (425.33px) + 2 phone cards (194.64px)
+ * + 11 gaps (14px) = 4371.25px.
  * It starts with the 2nd copy's first card at x = -95.33 in the 1920 frame (as in the design)
  * and slides one full set to the left, which lands on an identical frame.
  */
 .strip__track {
   position: absolute;
   top: 0;
-  left: calc(50% - 1055.33px - 2636px);
+  left: calc(50% - 1055.33px - 4371.25px);
   display: flex;
   gap: 14px;
-  animation: strip-scroll 90s linear infinite;
+  animation: strip-scroll 149.25s linear infinite; /* same speed as with six cards (90s) */
   will-change: transform;
 }
 
@@ -581,15 +582,61 @@ img {
   border-radius: 12px;
 }
 
+/* One project: its card(s) with the name underneath.
+   Cards inside an item use the track's gap, so the loop maths is unchanged. */
+.strip__item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.strip__shots {
+  display: flex;
+  gap: 14px;
+}
+
+/* Name with a small type tag beside it */
+.strip__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 2px;
+}
+
+.strip__tag {
+  padding: 1px 8px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.06);
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+.strip__name {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: var(--text-80);
+  white-space: nowrap;
+}
+
+/* Phone screen on its own: same height, phone proportions (660 × 1433) */
+.strip__card--mobile {
+  width: 194.64px;
+}
+
 @keyframes strip-scroll {
   to {
-    transform: translateX(-2636px);
+    transform: translateX(-4371.25px);
   }
 }
 
 @keyframes strip-scroll-mobile {
   to {
-    transform: translateX(-1560px);
+    transform: translateX(-2588.8px);
   }
 }
 
@@ -2460,25 +2507,52 @@ html.lenis.lenis-stopped {
   }
 
   /* Product marquee: back in the flow under the CTA, with smaller cards.
-     One set is 6 × (250px + 10px gap) = 1560px; start on the 2nd copy and slide one set left. */
+     One set is 9 × 250px + 2 phones × 114.4px + 11 gaps × 10px = 2588.8px; start on the 2nd copy and slide one set left. */
   .strip {
     position: relative;
     top: auto;
-    height: 248.4px;
+    height: 274.4px; /* cards (248.4px) + name line */
     margin-top: 48px;
   }
 
   .strip__track {
-    left: -1560px;
+    left: -2588.8px;
     gap: 10px;
     animation-name: strip-scroll-mobile;
-    animation-duration: 54s;
+    animation-duration: 89.6s; /* same speed as with six cards (54s) */
   }
 
   .strip__card {
     width: 250px;
     height: 248.4px;
     border-radius: 10px;
+  }
+
+  .strip__card--mobile {
+    width: 114.4px;
+  }
+
+  .strip__item {
+    gap: 8px;
+  }
+
+  .strip__shots {
+    gap: 10px;
+  }
+
+  .strip__name {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .strip__meta {
+    gap: 6px;
+  }
+
+  .strip__tag {
+    padding: 0 6px;
+    font-size: 10px;
+    line-height: 16px;
   }
 
   .approach__grid {

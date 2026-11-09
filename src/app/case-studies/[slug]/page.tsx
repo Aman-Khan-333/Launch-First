@@ -122,7 +122,7 @@ export default async function CaseStudyPage({ params }: Props) {
                 <h2 className="vids__cta-title">Want results like {c.name}?</h2>
                 <p className="vids__cta-text">A working product live in 14 days, at a fixed price of $9,999 only.</p>
               </div>
-              <MeetCallButton href="/#get-pricing" />
+              <MeetCallButton />
             </div>
           </div>
         </section>

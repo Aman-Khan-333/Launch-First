@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ChevronRight, GoogleMeetLogo } from "./icons";
 
+/** Booking page for the free scope call; every "Book a call" CTA opens it in a new tab. */
+export const BOOKING_URL = "https://cal.launchfirst.com/widget/booking/nSvYccJOPeRIOPtDVT3Q";
+
 export function Pill({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
   return <span className={dark ? "pill pill--dark" : "pill"}>{children}</span>;
 }
@@ -47,7 +50,15 @@ export function PrimaryButton({
       <span className="btn-primary__label">{children}</span>
     </>
   );
-  // Links to other pages navigate client-side; in-page anchors stay plain so the smooth scroll handles them.
+  // Links to other pages navigate client-side; in-page anchors stay plain so the smooth scroll handles them;
+  // external links open in a new tab.
+  if (href.startsWith("http")) {
+    return (
+      <a href={href} className={`btn-primary ${className}`} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
   return href.startsWith("/") ? (
     <Link href={href} className={`btn-primary ${className}`}>
       {content}
@@ -62,7 +73,7 @@ export function PrimaryButton({
 /** "Book a free scope call" CTA: black button with the Google Meet logo and the moving Meet-colour glow. */
 export function MeetCallButton({
   children = "Book a free scope call",
-  href = "#get-pricing",
+  href = BOOKING_URL,
   className = "",
   wrapClassName = "",
 }: {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ChevronRight } from "./icons";
+import { BOOKING_URL } from "./ui";
 
 // Home page menu. The white pill follows the reader: each section's link lights up once the section
 // reaches SPY_LINE (a fraction of the viewport height from the top); above them all, Home is lit.
@@ -159,12 +160,12 @@ export function Nav() {
           })}
         </nav>
         <div className="nav__cta">
-          <Link href={sectionHref("#get-pricing")}>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
             <span className="nav__cta-icon" aria-hidden="true">
               <ChevronRight />
             </span>
             Book a Call
-          </Link>
+          </a>
         </div>
       </div>
     </header>
