@@ -1689,9 +1689,12 @@ img {
   color: #fff;
 }
 
+/* The form sits in a light outlined card */
 .form {
   width: 654px;
-  padding-top: 7.6px;
+  padding: 28px;
+  border: 1px solid #e3e3e3;
+  border-radius: 20px;
 }
 
 .form__row {
@@ -2418,6 +2421,11 @@ html.lenis.lenis-stopped {
 
   .nav-bar__blur {
     display: block;
+  }
+
+  .form {
+    padding: 20px;
+    border-radius: 16px;
   }
 
   /* Stats: one per row as a table: label on the left, figure on the right, divider lines between */
