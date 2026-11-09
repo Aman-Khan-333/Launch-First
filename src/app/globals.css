@@ -1777,11 +1777,6 @@ button.btn-primary {
   cursor: pointer;
 }
 
-button.btn-primary:disabled {
-  cursor: progress;
-  background: #2a2a2a;
-}
-
 .form__honey {
   position: absolute;
   left: -9999px;
