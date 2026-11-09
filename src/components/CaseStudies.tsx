@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Testimonials } from "./Testimonials";
 import { PrimaryButton, SectionHeader } from "./ui";
 
 // Products we've shipped; screenshots are shared with the hero strip.
@@ -37,8 +38,9 @@ const cases = [
 
 export function CaseStudies() {
   return (
-    <section className="cases-section" id="case-studies" data-nav-dark>
-      <div className="cases">
+    <section className="cases-section" data-nav-dark>
+      <Testimonials />
+      <div className="cases" id="case-studies">
         <div className="container">
           <SectionHeader
             dark

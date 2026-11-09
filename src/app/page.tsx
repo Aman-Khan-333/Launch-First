@@ -9,7 +9,6 @@ import { Hero } from "@/components/Hero";
 import { Nav } from "@/components/Nav";
 import { Pricing } from "@/components/Pricing";
 import { Process } from "@/components/Process";
-import { Testimonials } from "@/components/Testimonials";
 
 export default function Home() {
   return (
@@ -23,7 +22,6 @@ export default function Home() {
       <Comparison />
       <Process />
       <Pricing />
-      <Testimonials />
       <GetPricing />
       <Faq />
       <Footer />

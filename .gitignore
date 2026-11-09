@@ -4,3 +4,6 @@ next-env.d.ts
 tsconfig.tsbuildinfo
 .env*
 .DS_Store
+
+# Original full-size testimonial stills (the site uses the compressed copies in public/images/testimonials)
+/Testimonials/

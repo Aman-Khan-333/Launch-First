@@ -23,7 +23,8 @@ const SELECTOR = [
   ".case",
   // pricing + testimonials
   ".price-card",
-  ".testimonials__viewport",
+  ".v-card",
+  ".vids__cta",
   // get pricing
   ".get-pricing__points li",
   ".get-pricing .mail-link",

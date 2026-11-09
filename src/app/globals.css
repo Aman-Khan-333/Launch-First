@@ -295,9 +295,11 @@ img {
   inset: 0;
 }
 
-/* Tucked away above the viewport while scrolling down */
-.nav-bar.is-hidden {
-  transform: translateY(-110%);
+/* Phones only: tucked away above the viewport while scrolling down (desktop keeps it pinned) */
+@media (max-width: 640px) {
+  .nav-bar.is-hidden {
+    transform: translateY(-110%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1105,12 +1107,6 @@ img {
   position: relative;
 }
 
-/* Left-aligned header, lined up with the card grid. */
-.cases .section-header {
-  align-items: flex-start;
-  text-align: left;
-}
-
 .cases .lead {
   color: rgba(255, 255, 255, 0.8);
 }
@@ -1346,47 +1342,91 @@ img {
   top: 4.67px;
 }
 
-/* ---------- Testimonials ---------- */
+/* ---------- Video testimonials (top of the dark case studies section) ---------- */
 
-.testimonials {
-  padding-bottom: 102.3px;
+.vids {
+  position: relative; /* above the section's grain overlay */
 }
 
-/* Endless row of landscape video cards: auto-scrolls, drags with the mouse, swipes on touch. */
-.testimonials__viewport {
-  margin-top: 48.7px;
+.vids .lead {
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.testimonials__track {
+/* Testimonials + case studies headers: same text width as the founder concerns header (~660px) */
+.vids .h2,
+.vids .lead,
+.cases .h2,
+.cases .lead {
+  max-width: 660px;
+  text-wrap: balance; /* even line lengths, no one-word last line */
+}
+
+/* The testimonials heading stays on one line wherever it fits (tablet and up) */
+@media (min-width: 641px) {
+  .vids .h2 {
+    max-width: none;
+    white-space: nowrap;
+  }
+
+  /* Intro box matches the one-line heading width */
+  .vids .lead {
+    max-width: 678px;
+    text-wrap: wrap; /* fill the full width rather than balancing */
+  }
+
+  /* Case studies intro matches its one-line heading width */
+  .cases .lead {
+    max-width: 614px;
+    text-wrap: wrap;
+  }
+}
+
+.vids__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px 24px;
+  margin-top: 56px;
+}
+
+/* Call to action closing the testimonials: divider, text on the left, button on the right */
+.vids__cta {
+  position: relative;
+  z-index: 1;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 24px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  cursor: grab;
-  user-select: none;
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.testimonials__track::-webkit-scrollbar {
-  display: none;
+.vids__cta-title {
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  font-variation-settings: var(--display);
 }
 
-.testimonials__track.is-dragging {
-  cursor: grabbing;
+.vids__cta-text {
+  margin-top: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
 }
 
-.testimonials__track img {
-  -webkit-user-drag: none;
-}
-
-.v-card {
-  flex: 0 0 560px;
+/* Testimonials then case studies inside the same dark block */
+.vids + .cases {
+  margin-top: 140px;
 }
 
 .v-card__media {
   position: relative;
   overflow: hidden;
   aspect-ratio: 16 / 9;
-  border-radius: 16px;
+  border-radius: 12px;
   background: #202124;
 }
 
@@ -1408,194 +1448,44 @@ img {
   background: none;
   color: inherit;
   font: inherit;
-  cursor: inherit;
+  cursor: pointer;
 }
 
+.v-card__thumb {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.33, 0, 0.67, 1);
+}
+
+.v-card:hover .v-card__thumb {
+  transform: scale(1.03);
+}
+
+/* Green play button in the bottom-left corner of the thumbnail */
 .v-card__play {
-  position: relative;
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  bottom: 16px;
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 40px; /* centre over the tiles, above the control bar */
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--green);
   color: #000;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
-  transition:
-    transform 0.3s cubic-bezier(0.33, 0, 0.67, 1),
-    background-color 0.3s cubic-bezier(0.33, 0, 0.67, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.33, 0, 0.67, 1);
 }
 
 /* The triangle path is already drawn with its centroid at the middle of its 24px box. */
 .v-card__play svg {
   display: block;
+  width: 18px;
+  height: 18px;
 }
 
 .v-card:hover .v-card__play {
   transform: scale(1.08);
-  background: var(--green);
-}
-
-/* ---- Google Meet style thumbnail ---- */
-.meet {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  background: #202124;
-  color: #e8eaed;
-  text-align: left;
-}
-
-.meet__tiles {
-  display: grid;
-  flex: 1;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding: 12px 12px 0;
-}
-
-.meet__tile {
-  position: relative;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: #3c4043;
-}
-
-/* Meet outlines whoever is talking */
-.meet__tile--speaking {
-  box-shadow: inset 0 0 0 2px #8ab4f8;
-}
-
-.meet__avatar {
-  overflow: hidden;
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-}
-
-.meet__avatar img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.meet__avatar--brand {
-  display: grid;
-  place-items: center;
-  background: var(--green);
-  color: #000;
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-}
-
-.meet__label {
-  position: absolute;
-  left: 10px;
-  bottom: 8px;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-/* Little sound-level bars in the speaking tile */
-.meet__bars {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #1a73e8;
-}
-
-.meet__bars i {
-  width: 3px;
-  height: 6px;
-  border-radius: 2px;
-  background: #fff;
-  animation: meet-level 0.9s ease-in-out infinite alternate;
-}
-
-.meet__bars i:nth-child(2) {
-  height: 10px;
-  animation-delay: -0.3s;
-}
-
-.meet__bars i:nth-child(3) {
-  animation-delay: -0.6s;
-}
-
-@keyframes meet-level {
-  to {
-    transform: scaleY(0.4);
-  }
-}
-
-.meet__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 52px;
-  padding: 0 14px;
-}
-
-.meet__meta {
-  flex: 1;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.meet__meta--right {
-  text-align: right;
-  color: #9aa0a6;
-}
-
-.meet__controls {
-  display: flex;
-  gap: 8px;
-}
-
-.meet__btn {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #3c4043;
-}
-
-.meet__btn svg {
-  width: 16px;
-  height: 16px;
-}
-
-.meet__btn--end {
-  width: 44px;
-  border-radius: 16px;
-  background: #ea4335;
-}
-
-.meet__btn--end svg {
-  width: 20px;
-  height: 20px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .meet__bars i {
-    animation: none;
-  }
 }
 
 .v-card__title {
@@ -1603,16 +1493,16 @@ img {
   font-size: 18px;
   line-height: 26px;
   letter-spacing: -0.02em;
-  font-weight: 500;
+  font-weight: 600;
   font-variation-settings: var(--display);
 }
 
 .v-card__quote {
   margin-top: 6px;
   padding-right: 12px;
-  font-size: 15px;
-  line-height: 24px;
-  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
 }
 
@@ -2317,6 +2207,10 @@ html.lenis.lenis-stopped {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .vids__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .hero__content {
     padding-inline: 20px;
   }
@@ -2407,8 +2301,19 @@ html.lenis.lenis-stopped {
     grid-template-columns: 1fr;
   }
 
-  .v-card {
-    flex-basis: calc(100vw - 40px);
+  .vids__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vids__cta {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 48px;
+    padding-top: 36px;
+  }
+
+  .vids + .cases {
+    margin-top: 96px;
   }
 
   /* 20px side gutter on phones */
