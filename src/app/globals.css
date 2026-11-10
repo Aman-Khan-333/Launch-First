@@ -1220,7 +1220,7 @@ img {
 .cases__more {
   display: flex;
   justify-content: center;
-  margin-top: 56px;
+  margin-top: 80px;
 }
 
 /* Subtle translucent version of the primary button for dark backgrounds. */
@@ -2828,10 +2828,12 @@ html.lenis.lenis-stopped {
 }
 
 .cs-frame {
+  position: relative;
   padding: 10px;
   border-radius: 16px;
   background: var(--tint);
 }
+
 
 /* Desktop: the text column sets the row height and the screenshot fills it, cropped from the bottom */
 .cs-body__media,
@@ -2855,7 +2857,87 @@ html.lenis.lenis-stopped {
   object-position: top left;
 }
 
+/* Screenshot gallery on the detail page: the first runs full width, the others two to a row */
+.cs-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 120px;
+}
+
+.cs-gallery__item {
+  padding: 10px;
+  border-radius: 16px;
+  background: var(--tint);
+}
+
+.cs-gallery__item:first-child {
+  grid-column: 1 / -1;
+}
+
+.cs-gallery__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Paired screenshots share one shape so the row lines up */
+.cs-gallery__item:not(:first-child) img {
+  aspect-ratio: 1600 / 972;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Mobile app section (Fade, Fresh Pass): write-up on the left, phone on the right under the web screenshot */
+.cs-app {
+  display: grid;
+  grid-template-columns: 5fr 6fr; /* same columns as .cs-body above */
+  align-items: center;
+  gap: 80px;
+  margin-bottom: 120px;
+}
+
+.cs-app__media {
+  display: flex;
+  justify-content: center;
+  padding: 48px 24px;
+  border-radius: 16px;
+  background: var(--tint);
+}
+
+.cs-app__phone {
+  width: 260px;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.cs-app__phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cs-app__text .pill {
+  margin-bottom: 18px;
+}
+
 @media (max-width: 1100px) {
+  .cs-app {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cs-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  /* Phone first on narrower screens, like the web screenshot above */
+  .cs-app__media {
+    order: -1;
+  }
+
   .cs-body {
     grid-template-columns: 1fr;
     gap: 56px;
@@ -2933,6 +3015,19 @@ html.lenis.lenis-stopped {
   .cs-body__end {
     margin-top: 32px;
     padding: 20px;
+  }
+
+  .cs-app {
+    margin-bottom: 96px;
+  }
+
+  .cs-app__media {
+    padding: 32px 20px;
+  }
+
+  .cs-app__phone {
+    width: min(220px, 60vw);
+    border-radius: 18px;
   }
 }
 

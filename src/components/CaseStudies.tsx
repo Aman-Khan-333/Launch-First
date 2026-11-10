@@ -45,7 +45,8 @@ export function CaseStudies() {
           />
         </div>
         <ul className="cases__grid container">
-          {cases.map((c) => (
+          {/* Home page shows the first six; the rest are on /case-studies ("View all case studies") */}
+          {cases.slice(0, 6).map((c) => (
             <CaseCard key={c.slug} c={c} />
           ))}
         </ul>

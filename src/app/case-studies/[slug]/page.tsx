@@ -102,6 +102,47 @@ export default async function CaseStudyPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Extra screenshots: the first runs full width, the rest sit two to a row */}
+        {c.gallery && (
+          <section className="cs-gallery container" aria-label={`${c.name} screenshots`}>
+            {c.gallery.map((g) => (
+              <div key={g.src} className="cs-gallery__item">
+                <Image src={`/images/case-studies/${g.src}.jpg`} alt={g.alt} width={1600} height={980} sizes="(max-width: 640px) 100vw, (max-width: 1100px) 90vw, 1360px" />
+              </div>
+            ))}
+          </section>
+        )}
+
+        {/* Web + mobile products: the mobile app gets its own section under the web screenshot */}
+        {c.mobile && (
+          <section className="cs-app container">
+            <div className="cs-app__text">
+              <Pill>Mobile app</Pill>
+              <h2 className="cs-body__heading cs-app__title">The {c.name} mobile app</h2>
+              <p className="cs-body__copy">{c.mobile.summary}</p>
+              <ul className="cs-body__list">
+                {c.mobile.features.map((f) => (
+                  <li key={f}>
+                    <Check className="cs-body__check" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="cs-app__media">
+              <div className="cs-app__phone">
+                <Image
+                  src={`/images/hero/${c.mobile.image}.png`}
+                  alt={`${c.name} mobile app screenshot`}
+                  width={390}
+                  height={847}
+                  sizes="(max-width: 640px) 60vw, 280px"
+                />
+              </div>
+            </div>
+          </section>
+        )}
+
         <section className="cases-section cs-more" data-nav-dark>
           <div className="cases">
             <div className="container">

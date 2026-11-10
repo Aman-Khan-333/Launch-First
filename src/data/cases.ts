@@ -1,13 +1,23 @@
-// Shipped products shown on the home page, /case-studies and /case-studies/[slug].
-// TODO: the summary / challenge / built / outcome copy is placeholder written from each product's category;
-// replace it with the real project details (and add real results once the client approves them).
+// Shipped products shown on the home page, /case-studies and /case-studies/[slug] — the same projects, in the same
+// order, as the hero marquee (Hero.tsx).
+// Terravive's copy comes from the founder's interview. TODO: the other entries are placeholder written from each
+// product's screenshots; replace them with the real project details (and real results once the client approves).
 
 export type CaseStudy = {
   slug: string;
   name: string;
   tag: string;
-  /** File name in public/images/hero (850×844 product screenshot) */
+  /** File name in public/images/hero (850×844 product card; web screenshot for web + mobile products) */
   image: string;
+  /** Products with a mobile app too: shown in its own section under the web screenshot on the detail page */
+  mobile?: {
+    /** Phone screen in public/images/hero (390×847) */
+    image: string;
+    summary: string;
+    features: string[];
+  };
+  /** Extra full screenshots for the detail page gallery (public/images/case-studies, 1600px wide) */
+  gallery?: { src: string; alt: string }[];
   summary: string;
   challenge: string;
   built: string[];
@@ -16,38 +26,51 @@ export type CaseStudy = {
 
 export const cases: CaseStudy[] = [
   {
-    slug: "invenci",
-    name: "Invenci",
-    tag: "AI infrastructure",
-    image: "invenci",
-    summary: "An AI infrastructure platform taken from a funded idea to a working product its first customers could log into.",
+    slug: "fade",
+    name: "Fade",
+    tag: "Barber & salon booking",
+    image: "fade-web",
+    mobile: {
+      image: "fade-mobile",
+      summary:
+        "Customers find and book barbers and stylists near them from their phone, with the web dashboard keeping providers and bookings in sync.",
+      features: [
+        "Location-aware search for services and barbers",
+        "Booking filters for sort, distance and availability",
+        "Saved favourites with ratings, prices and experience",
+        "\"Nearest to you\" list and one-tap booking",
+      ],
+    },
+    summary:
+      "A booking platform for barbers and stylists, with a web dashboard for providers and a mobile app for their customers.",
     challenge:
-      "The founders had raised to build an AI infrastructure product, but every agency quote ran for months before anyone could use it. They needed something real in customers' hands while the round was still fresh.",
+      "Fade needed both sides of the market working on day one: providers managing services and bookings, and customers finding and booking them from their phone.",
     built: [
-      "Customer-facing web app with secure sign-up and team accounts",
-      "Dashboard for managing workloads and usage",
-      "Admin tools for the founding team",
-      "Production hosting, monitoring and handover docs",
+      "Mobile app for customers to find, save and book barbers nearby",
+      "Web dashboard for providers, services and categories",
+      "Booking calendar and service schedules",
+      "Customer and provider management for the admin team",
     ],
     outcome:
-      "A live product shipped inside the 14-day window at the agreed fixed price, with the full codebase and IP handed over to the founders.",
+      "A working web and mobile product in front of providers and customers, owned 100% by the founders.",
   },
   {
-    slug: "visuali",
-    name: "Visuali",
-    tag: "Retail · AI",
-    image: "visuali",
-    summary: "An AI-powered retail product built to put visual tools in front of shoppers and store teams fast.",
+    slug: "kynos",
+    name: "Kynos",
+    tag: "Mental wellness",
+    image: "kynos",
+    summary:
+      "A mental wellness web app that guides people through daily check-ins, practices and structured frameworks.",
     challenge:
-      "Visuali needed to prove its AI retail idea with real users, not a click-through prototype, before committing to a long build.",
+      "Kynos needed a calm, simple experience people would come back to every day, with real progress tracking behind it rather than a static content library.",
     built: [
-      "Responsive web app for shoppers and store teams",
-      "AI-driven visual features wired into the core flow",
-      "Product catalogue and account management",
-      "Analytics to track how users engage from day one",
+      "Daily check-in that matches practices to how the user feels",
+      "Frameworks and multi-day journeys with progress tracking",
+      "Journal, saved items and a personal story view",
+      "Streaks, completion stats and a Pro upgrade path",
     ],
     outcome:
-      "A working product live in 14 days, ready to demo to retailers and investors, owned 100% by the founders.",
+      "A live product ready for its first members, with the full codebase and IP handed to the founders.",
   },
   {
     slug: "beneficiary-platform",
@@ -67,6 +90,35 @@ export const cases: CaseStudy[] = [
       "A production-ready platform delivered at a fixed price and on the agreed date, ready to put in front of real policyholders.",
   },
   {
+    slug: "fresh-pass",
+    name: "Fresh Pass",
+    tag: "Beauty & grooming",
+    image: "fresh-pass-web",
+    mobile: {
+      image: "fresh-pass-mobile",
+      summary:
+        "The same marketplace in customers' pockets: browse shops by service, switch between subscriptions and single services, and book in a few taps.",
+      features: [
+        "Service categories from hair and barber to nails and brows",
+        "Subscriptions list and individual services side by side",
+        "Verified providers with reviews, offers and prices",
+        "Booking, notifications and chat in one app",
+      ],
+    },
+    summary:
+      "A marketplace for barbershops, salons and spas, on the web and in a mobile app, with subscriptions and individual services.",
+    challenge:
+      "Fresh Pass needed to bring local shops and customers together in one place, with booking and subscription options that work just as well on a phone.",
+    built: [
+      "Website and mobile app for finding nearby shops by service",
+      "Subscription and individual service listings",
+      "Provider profiles with ratings, offers and pricing",
+      "Booking, notifications and account management",
+    ],
+    outcome:
+      "A working web and mobile marketplace in front of shops and customers, owned 100% by the founders.",
+  },
+  {
     slug: "flightpath",
     name: "Flightpath",
     tag: "Cybersecurity",
@@ -82,6 +134,24 @@ export const cases: CaseStudy[] = [
     ],
     outcome:
       "A live product shipped in two weeks, with the founders owning every line of code and free to keep building on it.",
+  },
+  {
+    slug: "data-capture",
+    name: "Data Capture",
+    tag: "Property & HOA",
+    image: "data-capture",
+    summary:
+      "A data capture and review platform for property studies, tracking every component across organisations and sites.",
+    challenge:
+      "Inspection data was scattered across spreadsheets and site visits. The team needed one place to capture, review and report on the condition of every component.",
+    built: [
+      "Admin dashboard across organisations and studies",
+      "Component capture and review workflow",
+      "Condition, remaining life and cost-by-category reporting",
+      "Inspector activity tracking",
+    ],
+    outcome:
+      "A production-ready platform the team can put in front of clients, at a fixed price agreed before any code was written.",
   },
   {
     slug: "safetynexus",
@@ -101,21 +171,63 @@ export const cases: CaseStudy[] = [
       "A working product in front of care teams within the 14-day build, at the price agreed before any code was written.",
   },
   {
-    slug: "terraive",
-    name: "Terraive",
-    tag: "Land & planning",
-    image: "terraive",
-    summary: "A land and planning product that brings site information into one clear place.",
+    slug: "prime-roster",
+    name: "Prime Roster",
+    tag: "Recruitment",
+    image: "prime-roaster",
+    summary:
+      "A recruitment dashboard that keeps every candidate, pipeline and interview in one clear view.",
     challenge:
-      "Land and planning work is spread across documents, maps and emails. Terraive needed a product that pulled it together and was ready for real projects, fast.",
+      "Recruiters were juggling candidates across tools and inboxes. Prime Roster needed pipelines that show exactly where every role and candidate stands.",
     built: [
-      "Web app for managing sites and projects",
-      "Map-based views of land and planning data",
-      "Document storage tied to each site",
-      "Team accounts and sharing",
+      "Recruiter dashboard with live hiring stats",
+      "Role pipelines with stage-by-stage candidate boards",
+      "Interview scheduling and upcoming interviews",
+      "Talent hub, messages and shortlists",
     ],
     outcome:
-      "A live product launched in 14 days at a fixed price, fully owned by the founders and ready for their first customers.",
+      "A working product live for recruiters, with the founders owning every line of code.",
+  },
+  {
+    slug: "terravive",
+    name: "Terravive",
+    tag: "Landscape design",
+    image: "terravive",
+    summary:
+      "An AI platform that helps landscape architects and land-use teams make ecologically sound design decisions.",
+    challenge:
+      "Todd Degner, a non-technical founder with 30 years in landscape architecture, needed a team that could understand a complex industry and turn it into tools designers find simple.",
+    built: [
+      "3D site analysis with terrain, slope, heat and canopy layers",
+      "Imports from Civil 3D, Revit, Autodesk Forma and SketchUp",
+      "Ecological and regulatory intelligence for each project",
+      "Export back to the source tool, PNG, JPEG and PDF",
+    ],
+    outcome:
+      "Ready for beta testing with design firms that have signed letters of intent, built affordably enough for the founders to keep their equity.",
+  },
+  {
+    slug: "imacitizen-theorist",
+    name: "ImaCitizen Theorist",
+    tag: "Gaming",
+    image: "imacitizen",
+    gallery: [
+      { src: "imacitizen-3", alt: "ImaCitizen Theorist game in progress on the 3D board" },
+      { src: "imacitizen-1", alt: "ImaCitizen Theorist welcome screen" },
+      { src: "imacitizen-2", alt: "ImaCitizen Theorist new game setup" },
+    ],
+    summary:
+      "A 3D chess game for two players on one device, with realistic boards and pieces, chess clocks and saved games.",
+    challenge:
+      "The founders wanted chess that feels like sitting at a real table: a believable 3D board, smooth controls and pass-and-play that just works between two people on one screen.",
+    built: [
+      "Realistic 3D board with camera controls and move highlights",
+      "Pass-and-play games with player names and colour swap",
+      "Chess clocks from bullet to classical, plus saved games",
+      "Board and piece set choices, takebacks, draws and resigning",
+    ],
+    outcome:
+      "A polished, playable game ready for players, with the full codebase and IP owned by the founders.",
   },
 ];
 

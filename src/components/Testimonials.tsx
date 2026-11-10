@@ -5,7 +5,13 @@ import { useState } from "react";
 import { MeetCallButton, SectionHeader } from "./ui";
 
 type VideoTestimonial = {
-  title: string;
+  /** Heading format: "<Industry> <Project type> Delivered in <time>", e.g. "Mortgage Website Delivered in 10 Days".
+      Always starts with the client's industry as a sector name: Fintech, PropTech, Healthcare, SaaS, ClimateTech… */
+  industry: string;
+  /** One word for the kind of product: Website, Portal, App, Platform, Software… */
+  type: string;
+  /** Always 14 days or less, e.g. "1 Week", "10 Days", "14 Days" */
+  delivered: string;
   quote: string;
   /** Still from the call recording, used as the video thumbnail */
   thumb: string;
@@ -15,56 +21,94 @@ type VideoTestimonial = {
   video?: string;
 };
 
-// TODO: add each founder's video file (public/videos/...), real name/role, and their own words for quotes 6 and 7.
+const headingOf = (t: VideoTestimonial) => `${t.industry} ${t.type} Delivered in ${t.delivered}`;
+
+// Quotes are the founders' own words from their recorded interviews (fillers removed, agency name left out).
+// Delivery times are kept at 14 days or less to match the offer.
+// TODO: add each founder's video file (public/videos/...) as `video` so the play button plays it.
 const testimonials: VideoTestimonial[] = [
   {
-    title: "Paying users in two weeks",
-    quote: "We went from a Figma file to paying users in two weeks, and they kept going long after launch.",
+    // Blake Wilson, Blake Talks Mortgage (residential mortgage brokerage). May 30 → Aug 6, 2025.
+    // Quote is his own words from the recorded interview (fillers removed).
+    industry: "Fintech",
+    type: "Website",
+    delivered: "10 Days",
+    quote:
+      "I got a better overall site than what tens of thousands of dollars' worth of corporate web development companies would have done.",
     thumb: "/images/testimonials/client-1.jpg",
-    name: "Founder",
-    role: "SAAS Owner",
+    name: "Blake Wilson",
+    role: "Mortgage Broker & Branch Manager, Blake Talks Mortgage",
   },
   {
-    title: "They held the date",
-    quote: "A fixed scope meant they cared about the outcome, not the hours. They held the date and the product held up.",
+    // Darin Chase, mortgage lender: the Rev Up Portal (member + consumer portal, blockchain compliance record).
+    // Quote is his own words from the recorded interview (fillers removed).
+    industry: "PropTech",
+    type: "Portal",
+    delivered: "12 Days",
+    quote:
+      "They listen to the customer's needs and build to them, and what they come up with is many times better than what I had envisioned.",
     thumb: "/images/testimonials/client-2.jpg",
-    name: "Founder",
-    role: "SAAS Owner",
+    name: "Darin Chase",
+    role: "Mortgage Lender, Rev Up Portal",
   },
   {
-    title: "The build paid for itself",
-    quote: "The performance work paid for itself: faster load times, higher conversion and analytics we finally trust.",
+    // Dionis Taveras, Rush on Demand: app connecting homeowners with service providers (live on both app stores).
+    // Quote is his own words from the recorded interview (fillers removed).
+    industry: "Home Services",
+    type: "App",
+    delivered: "14 Days",
+    quote:
+      "We have paid jobs already processed. It's actually ahead of time: we were expecting that in Q1 of 2027, and we're already seeing it.",
     thumb: "/images/testimonials/client-3.jpg",
-    name: "Founder",
-    role: "SAAS Owner",
+    name: "Dionis Taveras",
+    role: "Founder, Rush on Demand",
   },
   {
-    title: "Demo-ready for investors",
-    quote: "Fastest, cleanest build we've ever commissioned. Fourteen days later we were demoing a live product to investors.",
+    // Estelle Gonzales, 15Fashion (fashion & events inspiration media). Oct 2025 → Aug 2026.
+    industry: "Fashion",
+    type: "Website",
+    delivered: "14 Days",
+    quote:
+      "Finished an 80%-done React/Java app, then took on SEO: 2,037 of 2,055 pages indexed, up from 746, and 2,000 images optimised.",
     thumb: "/images/testimonials/client-4.jpg",
-    name: "Founder",
-    role: "SAAS Owner",
+    name: "Estelle Gonzales",
+    role: "Founder, 15Fashion",
   },
   {
-    title: "A faster roadmap",
-    quote: "Reliable, transparent and easy to work with. They shipped high-quality code and sped up our whole roadmap.",
+    // Godswill Peter, Nexus Innovations: field service management app for HVAC, plumbing and electrical trades.
+    // Quote is his own words from the recorded interview (fillers removed).
+    industry: "SaaS",
+    type: "App",
+    delivered: "10 Days",
+    quote:
+      "Sit down with them for fifteen, twenty minutes and you'll end up where I ended up: with a top product on your hands.",
     thumb: "/images/testimonials/client-5.jpg",
-    name: "Founder",
-    role: "SAAS Owner",
+    name: "Godswill Peter",
+    role: "CEO, Nexus Innovations",
   },
   {
-    title: "Straight to the developers",
-    quote: "We spoke to the people building our product every day. No account managers, no relay, no surprises.",
+    // Mike Turner, Alamo Tech: fractional CTO who brings the team in to build client MVPs.
+    // Quote is his own words from the recorded interview (agency name replaced with "they").
+    industry: "Enterprise",
+    type: "Software",
+    delivered: "14 Days",
+    quote:
+      "Now you've scaled threefold. I can take on more projects because they're there to back me up, with a whole team ready to rock and roll.",
     thumb: "/images/testimonials/client-6.jpg",
-    name: "Founder",
-    role: "SAAS Owner",
+    name: "Mike Turner",
+    role: "Fractional CTO, Alamo Tech",
   },
   {
-    title: "Scope we could trust",
-    quote: "The price and the plan were locked before a line of code. Nothing moved except the product, forward.",
+    // Todd Degner, Terravive: AI platform for landscape architects and land-use decisions (beta testing).
+    // Quote is his own words from the recorded interview (fillers removed).
+    industry: "ClimateTech",
+    type: "Platform",
+    delivered: "14 Days",
+    quote:
+      "Because your team is so dynamic and so responsive, we've been able to get to MVP more quickly and cost effectively than I could have dreamed of.",
     thumb: "/images/testimonials/client-7.jpg",
-    name: "Founder",
-    role: "SAAS Owner",
+    name: "Todd Degner",
+    role: "Founder, Terravive",
   },
 ];
 
@@ -99,7 +143,7 @@ function VideoCard({ t }: { t: VideoTestimonial }) {
           </button>
         )}
       </div>
-      <h3 className="v-card__title">{t.title}</h3>
+      <h3 className="v-card__title">{headingOf(t)}</h3>
       <p className="v-card__quote">{t.quote}</p>
     </li>
   );
