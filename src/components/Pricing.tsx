@@ -13,7 +13,9 @@ const included = [
 export function Pricing() {
   return (
     <section className="pricing" id="pricing">
-      <Image className="pricing__bg" src="/images/pricing-bg.png" alt="" width={2580} height={1388} />
+      <Image className="pricing__bg" src="/images/pricing-bg-v2.png" alt="" width={2580} height={1388} />
+      {/* Same dashed grid as the comparison table, above the glow and behind the card */}
+      <div className="pricing__grid" aria-hidden="true" />
       <SectionHeader
         pill="Fixed Cost"
         title="One fixed number. Agreed up front."

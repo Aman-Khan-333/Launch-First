@@ -24,7 +24,7 @@
   --display: "opsz" 32;
   --text: "opsz" 14;
   /* Dashed 44px grid with dots at the crossings (comparison background). */
-  --grid-dashed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M0 22.5h44M22.5 0v44' stroke='%23000' stroke-opacity='.16' stroke-dasharray='5 4'/%3E%3Ccircle cx='22.5' cy='22.5' r='2' fill='%23000' fill-opacity='.28'/%3E%3C/svg%3E");
+  --grid-dashed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M0 22.5h44M22.5 0v44' stroke='%23000' stroke-opacity='.28' stroke-dasharray='5 4'/%3E%3Ccircle cx='22.5' cy='22.5' r='2' fill='%23000' fill-opacity='.45'/%3E%3C/svg%3E");
 }
 
 html {
@@ -851,7 +851,7 @@ img {
   margin: 73.3px auto 0; /* 57.3px visible gap + 16px outside stroke */
 }
 
-/* Same dashed grid as the concerns section, fading out around the table. */
+/* Dashed grid behind the comparison table, fading out around it. */
 .compare__stage::before {
   content: "";
   position: absolute;
@@ -1241,7 +1241,7 @@ img {
   left: calc(50% - 760px);
   width: 1720px;
   height: 36px;
-  background: url("/images/pricing-bg.png") 0 -6px / 1720px 925px no-repeat;
+  background: url("/images/pricing-bg-v2.png") 0 -6px / 1720px 925px no-repeat;
   transform: scaleY(-1);
   pointer-events: none;
 }
@@ -1253,6 +1253,26 @@ img {
   width: 1720px;
   height: 925px;
   clip-path: inset(6px 0 0 0); /* the crop's top rows hold a sliver of the dark section above */
+  pointer-events: none;
+}
+
+.pricing__grid {
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  width: 1500px;
+  height: 760px;
+  transform: translateX(-50%);
+  background: var(--grid-dashed) center / 44px 44px;
+  /* soft edges all round, plus a longer fade out towards the bottom */
+  -webkit-mask-image:
+    radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%),
+    linear-gradient(to bottom, #000 45%, transparent 90%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse 50% 50% at 50% 50%, #000 45%, transparent 100%),
+    linear-gradient(to bottom, #000 45%, transparent 90%);
+  mask-composite: intersect;
   pointer-events: none;
 }
 
@@ -2605,6 +2625,13 @@ html.lenis.lenis-stopped {
 
   .strip__card--mobile {
     width: 114.4px;
+  }
+
+  /* Pricing grid: around the taller stacked card on phones */
+  .pricing__grid {
+    top: 440px;
+    width: 760px;
+    height: 1000px;
   }
 
   .strip__item {
