@@ -29,6 +29,10 @@ export function CaseCard({ c }: { c: CaseStudy }) {
   );
 }
 
+// Listed on /case-studies but left off the home page selection.
+const HIDDEN_ON_HOME = ["beneficiary-platform", "flightpath"];
+const homeCases = cases.filter((c) => !HIDDEN_ON_HOME.includes(c.slug)).slice(0, 6);
+
 export function CaseStudies() {
   return (
     <section className="cases-section" data-nav-dark>
@@ -45,8 +49,8 @@ export function CaseStudies() {
           />
         </div>
         <ul className="cases__grid container">
-          {/* Home page shows the first six; the rest are on /case-studies ("View all case studies") */}
-          {cases.slice(0, 6).map((c) => (
+          {/* Home page shows six; every project is on /case-studies ("View all case studies") */}
+          {homeCases.map((c) => (
             <CaseCard key={c.slug} c={c} />
           ))}
         </ul>

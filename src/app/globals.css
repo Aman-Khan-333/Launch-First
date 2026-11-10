@@ -560,18 +560,18 @@ img {
 }
 
 /*
- * Endless marquee: three copies of the card set. One set = 9 web cards (425.33px) + 2 phone cards (194.64px)
- * + 11 gaps (14px) = 4371.25px.
+ * Endless marquee: three copies of the card set. One set = 8 web cards (425.33px) + 2 phone cards (194.64px)
+ * + 10 gaps (14px) = 3931.92px.
  * It starts with the 2nd copy's first card at x = -95.33 in the 1920 frame (as in the design)
  * and slides one full set to the left, which lands on an identical frame.
  */
 .strip__track {
   position: absolute;
   top: 0;
-  left: calc(50% - 1055.33px - 4371.25px);
+  left: calc(50% - 1055.33px - 3931.92px);
   display: flex;
   gap: 14px;
-  animation: strip-scroll 149.25s linear infinite; /* same speed as with six cards (90s) */
+  animation: strip-scroll 134.25s linear infinite; /* same speed as with six cards (90s) */
   will-change: transform;
 }
 
@@ -630,13 +630,13 @@ img {
 
 @keyframes strip-scroll {
   to {
-    transform: translateX(-4371.25px);
+    transform: translateX(-3931.92px);
   }
 }
 
 @keyframes strip-scroll-mobile {
   to {
-    transform: translateX(-2588.8px);
+    transform: translateX(-2328.8px);
   }
 }
 
@@ -2602,7 +2602,7 @@ html.lenis.lenis-stopped {
   }
 
   /* Product marquee: back in the flow under the CTA, with smaller cards.
-     One set is 9 × 250px + 2 phones × 114.4px + 11 gaps × 10px = 2588.8px; start on the 2nd copy and slide one set left. */
+     One set is 8 × 250px + 2 phones × 114.4px + 10 gaps × 10px = 2328.8px; start on the 2nd copy and slide one set left. */
   .strip {
     position: relative;
     top: auto;
@@ -2611,10 +2611,10 @@ html.lenis.lenis-stopped {
   }
 
   .strip__track {
-    left: -2588.8px;
+    left: -2328.8px;
     gap: 10px;
     animation-name: strip-scroll-mobile;
-    animation-duration: 89.6s; /* same speed as with six cards (54s) */
+    animation-duration: 80.6s; /* same speed as with six cards (54s) */
   }
 
   .strip__card {

@@ -159,18 +159,19 @@ export const cases: CaseStudy[] = [
     slug: "safetynexus",
     name: "SafetyNexus",
     tag: "Social care",
-    image: "safetynexus",
-    summary: "A safety and compliance product for social care teams, designed around how carers actually work.",
+    image: "safetynexus-v2",
+    summary:
+      "An AI practice coach for child protection and social care teams: talk through cases, rehearse difficult conversations and map family violence patterns.",
     challenge:
-      "Social care teams have little time for clunky software. SafetyNexus needed a product simple enough to adopt straight away, and reliable enough to trust with care records.",
+      "Child protection practitioners rarely get time to think a case through or practise hard conversations before they happen. Leaders also had no clear view of how their practice model was really being used across teams.",
     built: [
-      "Mobile-friendly web app for care staff",
-      "Incident and safety reporting flows",
-      "Manager overview and team management",
-      "Secure data handling and access controls",
+      "AI coach for talking through cases and practice decisions",
+      "Role-play to rehearse difficult conversations",
+      "Mapping of family violence patterns",
+      "Leader analytics on how the practice model is used across teams, with data kept in-region",
     ],
     outcome:
-      "A working product in front of care teams within the 14-day build, at the price agreed before any code was written.",
+      "A working practice coach in front of child protection teams, with leaders seeing practice-model use team by team, owned 100% by the founders.",
   },
   {
     slug: "prime-roster",
@@ -291,6 +292,24 @@ export const cases: CaseStudy[] = [
     ],
     outcome:
       "A working trading platform ready for active traders, with the founders owning every line of code.",
+  },
+  {
+    slug: "championship-life",
+    name: "Championship Life AI",
+    tag: "Personal growth",
+    image: "championship-life",
+    summary:
+      "Empowering every life to find its direction: an AI platform that helps people discover themselves and grow with purpose.",
+    challenge:
+      "Many people feel lost in their potential, repeating efforts without clarity or direction. Championship Life needed to turn self-discovery into something guided, measurable and motivating.",
+    built: [
+      "Personalised insights and guided growth paths",
+      "Charlie, an AI companion that guides and supports every step",
+      "XP levels, streaks, badges and course progress",
+      "Live coaching sessions, a content library and a community",
+    ],
+    outcome:
+      "A working platform that turns self-discovery into confident, purposeful action, with the full codebase and IP owned by the founders.",
   },
 ];
 

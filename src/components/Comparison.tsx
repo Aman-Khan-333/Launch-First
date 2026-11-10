@@ -20,7 +20,7 @@ export function Comparison() {
         lead="The two things that keep founders from committing timeline and trust handled before you start."
       />
       <div className="compare__link">
-        <PrimaryButton href="#pricing">
+        <PrimaryButton href="#get-pricing">
           See the exact pricing &amp; process
         </PrimaryButton>
       </div>

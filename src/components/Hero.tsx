@@ -9,9 +9,8 @@ const projects = [
   { name: "Kynos", type: "Web app", images: ["kynos"] },
   { name: "Beneficiary Platform", type: "Dashboard", images: ["beneficiary"] },
   { name: "Fresh Pass", type: "Web & mobile app", images: ["fresh-pass-web", "fresh-pass-mobile"] },
-  { name: "Flightpath", type: "Dashboard", images: ["flightpath"] },
   { name: "Data Capture", type: "Dashboard", images: ["data-capture"] },
-  { name: "SafetyNexus", type: "Web app", images: ["safetynexus"] },
+  { name: "SafetyNexus", type: "Web app", images: ["safetynexus-v2"] },
   { name: "Prime Roster", type: "Dashboard", images: ["prime-roaster"] },
   { name: "Terravive", type: "Web app", images: ["terravive"] },
 ];
