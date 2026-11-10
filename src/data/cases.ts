@@ -18,6 +18,8 @@ export type CaseStudy = {
   };
   /** Extra full screenshots for the detail page gallery (public/images/case-studies, 1600px wide) */
   gallery?: { src: string; alt: string }[];
+  /** "phones": the gallery is phone screens (780×1690), shown side by side in one frame */
+  galleryStyle?: "phones";
   summary: string;
   challenge: string;
   built: string[];
@@ -228,6 +230,67 @@ export const cases: CaseStudy[] = [
     ],
     outcome:
       "A polished, playable game ready for players, with the full codebase and IP owned by the founders.",
+  },
+  {
+    slug: "oyf",
+    name: "OYF",
+    tag: "Personal finance",
+    image: "oyf-3up",
+    galleryStyle: "phones",
+    gallery: [
+      { src: "oyf-1", alt: "OYF home screen with balance, bills and savings" },
+      { src: "oyf-2", alt: "OYF virtual saving account with round-ups and transactions" },
+      { src: "oyf-3", alt: "OYF daily and weekly money challenges with XP rewards" },
+    ],
+    summary:
+      "An all-in-one personal finance app: loans, virtual cards and scheduled bills, arranged so that paying down debt is something you can see yourself finishing.",
+    challenge:
+      "Most finance apps show balances, not progress. OYF needed loans, cards and bills in one place, laid out so people can actually see their debt shrinking and stay motivated to finish it.",
+    built: [
+      "Mobile app with balance, savings, bills, expenses and income at a glance",
+      "Loan tracking that shows progress towards paying debt off",
+      "Virtual saving cards with automatic round-ups",
+      "Daily and weekly money challenges with XP rewards",
+      "Scheduled bills, connected accounts, goals and plans",
+    ],
+    outcome:
+      "A working personal finance app ready for its first users, with the full codebase and IP owned by the founders.",
+  },
+  {
+    slug: "invenci-ai-gateway",
+    name: "Invenci AI Gateway",
+    tag: "Enterprise AI",
+    image: "invenci-gateway",
+    summary:
+      "A secure, multi-tenant enterprise AI platform that gives organisations one place to use leading models such as GPT, Claude and Gemini.",
+    challenge:
+      "Teams were using AI tools one by one, with no control over cost, data or safety. Invenci needed a single, secure gateway that organisations could roll out across every team and tenant.",
+    built: [
+      "One workspace for GPT, Claude, Gemini and more, with automatic model routing",
+      "Chat over company documents",
+      "Microsoft 365 integration",
+      "Content safeguards and full cost tracking across organisations",
+    ],
+    outcome:
+      "A production-ready enterprise platform with usage, savings and violations tracked per organisation, owned 100% by the founders.",
+  },
+  {
+    slug: "govbeacon",
+    name: "GovBeacon",
+    tag: "Trading",
+    image: "govbeacon-v3",
+    summary:
+      "A professional trading platform with real-time charts, order book depth, AI trade signals and portfolio analytics for active traders.",
+    challenge:
+      "Active traders need speed and clarity. GovBeacon had to bring live market data, signals and execution together without the clutter of traditional trading tools.",
+    built: [
+      "Real-time charts and order book depth",
+      "AI trade signals and portfolio analytics",
+      "Market indices tracking with sector-based breakdowns",
+      "Fast trade execution",
+    ],
+    outcome:
+      "A working trading platform ready for active traders, with the founders owning every line of code.",
   },
 ];
 

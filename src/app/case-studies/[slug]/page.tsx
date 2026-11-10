@@ -102,8 +102,17 @@ export default async function CaseStudyPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Extra screenshots: the first runs full width, the rest sit two to a row */}
-        {c.gallery && (
+        {/* Extra screenshots. Web: the first runs full width, the rest two to a row. Phones: side by side in one frame. */}
+        {c.gallery && c.galleryStyle === "phones" && (
+          <section className="cs-phones container" aria-label={`${c.name} screens`}>
+            {c.gallery.map((g) => (
+              <div key={g.src} className="cs-phones__item">
+                <Image src={`/images/case-studies/${g.src}.jpg`} alt={g.alt} width={780} height={1690} sizes="(max-width: 640px) 70vw, 300px" />
+              </div>
+            ))}
+          </section>
+        )}
+        {c.gallery && !c.galleryStyle && (
           <section className="cs-gallery container" aria-label={`${c.name} screenshots`}>
             {c.gallery.map((g) => (
               <div key={g.src} className="cs-gallery__item">
