@@ -36,6 +36,7 @@ const testimonials: VideoTestimonial[] = [
     quote:
       "I got a better overall site than what tens of thousands of dollars' worth of corporate web development companies would have done.",
     thumb: "/images/testimonials/client-1.jpg",
+    video: "/videos/blake-wilson.mp4", // 720p H.264, compressed from the 1.26GB original
     name: "Blake Wilson",
     role: "Mortgage Broker & Branch Manager, Blake Talks Mortgage",
   },
@@ -127,7 +128,7 @@ function VideoCard({ t }: { t: VideoTestimonial }) {
     <li className="v-card">
       <div className="v-card__media">
         {playing && t.video ? (
-          <video className="v-card__video" src={t.video} controls autoPlay playsInline />
+          <video className="v-card__video" src={t.video} poster={t.thumb} controls autoPlay playsInline />
         ) : (
           <button
             type="button"
