@@ -25,7 +25,7 @@ const headingOf = (t: VideoTestimonial) => `${t.industry} ${t.type} Delivered in
 
 // Quotes are the founders' own words from their recorded interviews (fillers removed, agency name left out).
 // Delivery times are kept at 14 days or less to match the offer.
-// TODO: add each founder's video file (public/videos/...) as `video` so the play button plays it.
+// Videos are 720p H.264 compressed from the originals in /Testimonials (kept out of git).
 const testimonials: VideoTestimonial[] = [
   {
     // Blake Wilson, Blake Talks Mortgage (residential mortgage brokerage). May 30 → Aug 6, 2025.
@@ -49,6 +49,7 @@ const testimonials: VideoTestimonial[] = [
     quote:
       "They listen to the customer's needs and build to them, and what they come up with is many times better than what I had envisioned.",
     thumb: "/images/testimonials/client-2.jpg",
+    video: "/videos/darin-chase.mp4",
     name: "Darin Chase",
     role: "Mortgage Lender, Rev Up Portal",
   },
@@ -61,6 +62,7 @@ const testimonials: VideoTestimonial[] = [
     quote:
       "We have paid jobs already processed. It's actually ahead of time: we were expecting that in Q1 of 2027, and we're already seeing it.",
     thumb: "/images/testimonials/client-3.jpg",
+    video: "/videos/dionis-taveras.mp4",
     name: "Dionis Taveras",
     role: "Founder, Rush on Demand",
   },
@@ -72,6 +74,7 @@ const testimonials: VideoTestimonial[] = [
     quote:
       "Finished an 80%-done React/Java app, then took on SEO: 2,037 of 2,055 pages indexed, up from 746, and 2,000 images optimised.",
     thumb: "/images/testimonials/client-4.jpg",
+    video: "/videos/estelle-gonzales.mp4",
     name: "Estelle Gonzales",
     role: "Founder, 15Fashion",
   },
@@ -84,6 +87,7 @@ const testimonials: VideoTestimonial[] = [
     quote:
       "Sit down with them for fifteen, twenty minutes and you'll end up where I ended up: with a top product on your hands.",
     thumb: "/images/testimonials/client-5.jpg",
+    video: "/videos/godswill-peter.mp4",
     name: "Godswill Peter",
     role: "CEO, Nexus Innovations",
   },
@@ -96,6 +100,7 @@ const testimonials: VideoTestimonial[] = [
     quote:
       "Now you've scaled threefold. I can take on more projects because they're there to back me up, with a whole team ready to rock and roll.",
     thumb: "/images/testimonials/client-6.jpg",
+    video: "/videos/mike-turner.mp4",
     name: "Mike Turner",
     role: "Fractional CTO, Alamo Tech",
   },
@@ -108,6 +113,7 @@ const testimonials: VideoTestimonial[] = [
     quote:
       "Because your team is so dynamic and so responsive, we've been able to get to MVP more quickly and cost effectively than I could have dreamed of.",
     thumb: "/images/testimonials/client-7.jpg",
+    video: "/videos/todd-degner.mp4",
     name: "Todd Degner",
     role: "Founder, Terravive",
   },
