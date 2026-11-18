@@ -9,6 +9,9 @@ import { MeetCallButton, Pill } from "./ui";
 // FormSubmit send an activation email to this address; once that link is clicked, every request is delivered.
 const INBOX = "info@launchfirst.com";
 const ENDPOINT = `https://formsubmit.co/ajax/${INBOX}`;
+// Each request is also sent to the LaunchFirst studio, where it becomes a lead with the idea already
+// in the estimator. Overridable per deployment with NEXT_PUBLIC_STUDIO_INTAKE_URL.
+const STUDIO_INTAKE = process.env.NEXT_PUBLIC_STUDIO_INTAKE_URL || "https://app.launchfirst.com/api/intake";
 
 const stages = [
   { value: "business", label: "Business doing $500k+ revenue" },
@@ -53,6 +56,16 @@ export function GetPricing() {
     setErrorDetail("");
     const controller = new AbortController();
     const timer = window.setTimeout(() => controller.abort(), TIMEOUT_MS);
+    // The studio copy goes out alongside the email. Either one arriving is enough: the error below
+    // only shows when the email failed and the studio did not get it either.
+    const studio = fetch(STUDIO_INTAKE, {
+      method: "POST",
+      signal: controller.signal,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, stage: next.stage, idea, page: window.location.href }),
+    })
+      .then((r) => r.ok)
+      .catch(() => false);
     try {
       const res = await fetch(ENDPOINT, {
         method: "POST",
@@ -79,6 +92,10 @@ export function GetPricing() {
         throw new Error(json.message || `FormSubmit returned ${res.status}`);
       }
     } catch (err) {
+      if (await studio) {
+        console.warn("Pricing form: the email did not send, but the studio received the request.", err);
+        return;
+      }
       const aborted = err instanceof DOMException && err.name === "AbortError";
       setErrorDetail(aborted ? "the email service took too long to respond" : err instanceof Error ? err.message : "");
       setStatus("error");
