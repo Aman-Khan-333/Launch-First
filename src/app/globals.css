@@ -415,6 +415,7 @@ img {
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
+  white-space: nowrap;
   color: #000;
   transition:
     background-color 0.2s,
@@ -423,6 +424,13 @@ img {
 
 .nav__link:hover {
   background: rgba(0, 0, 0, 0.06);
+}
+
+/* Six links: tighter on smaller laptops so they stay on one line between the logo and Book a Call */
+@media (max-width: 1279px) {
+  .nav__link {
+    padding: 0 13px;
+  }
 }
 
 .nav__link.is-active {
@@ -1142,6 +1150,11 @@ img {
   scroll-margin-top: 110px; /* nav link lands with the label clear of the fixed nav */
 }
 
+/* "Testimonials" in the nav: same clearance */
+.vids {
+  scroll-margin-top: 110px;
+}
+
 .cases .lead {
   color: rgba(255, 255, 255, 0.8);
 }
@@ -1490,6 +1503,103 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* "Up next" intro card over the opening seconds of a testimonial. Purely visual: clicks pass through to the video. */
+.v-intro {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  max-width: calc(100% - 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 12px 8px;
+  border-radius: 9px;
+  background: rgba(10, 12, 10, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  color: #fff;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v-intro.is-on {
+  opacity: 1;
+  transform: none;
+}
+/* Label, then the bar */
+.v-intro > * {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v-intro.is-on > * {
+  opacity: 1;
+  transform: none;
+}
+.v-intro.is-on > :nth-child(2) { transition-delay: 0.15s; }
+
+.v-intro__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.v-intro__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(151, 252, 87, 0.6);
+  animation: v-intro-pulse 1.8s ease-out infinite;
+}
+@keyframes v-intro-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(151, 252, 87, 0.55); }
+  100% { box-shadow: 0 0 0 7px rgba(151, 252, 87, 0); }
+}
+/* Fills as the intro runs, then the card fades away */
+.v-intro__bar {
+  display: block;
+  height: 2px;
+  margin-top: 6px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+.v-intro__bar > span {
+  display: block;
+  height: 100%;
+  background: var(--green);
+  transform-origin: left;
+  transition: transform 0.3s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v-intro, .v-intro > * { transition: opacity 0.3s ease; transform: none; }
+  .v-intro__dot { animation: none; }
+}
+
+/* Captions in the site font, on a soft dark backing */
+.v-card__video::cue {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+/* Full screen: the video fills the viewport, so size captions to the screen height */
+.v-card__video:fullscreen::cue {
+  font-size: clamp(22px, 3.6vh, 52px);
+}
+.v-card__video:-webkit-full-screen::cue {
+  font-size: clamp(22px, 3.6vh, 52px);
 }
 
 .v-card__poster {
@@ -3119,7 +3229,10 @@ html.has-modal {
   overflow: hidden;
 }
 
+/* Booking popup. While closed it stays laid out but invisible, so the preloaded calendar renders at its real size. */
 .booking {
+  position: fixed;
+  inset: 0;
   width: 100%;
   max-width: none;
   height: 100%;
@@ -3133,13 +3246,14 @@ html.has-modal {
 }
 
 .booking:not([open]) {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .booking::backdrop {
-  background: rgba(10, 14, 8, 0.55);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  background: rgba(10, 14, 8, 0.6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   opacity: 0;
   transition: opacity 0.25s cubic-bezier(0.33, 0, 0.67, 1);
 }
@@ -3151,17 +3265,19 @@ html.has-modal {
 .booking__panel {
   display: flex;
   flex-direction: column;
-  width: min(880px, 100%);
-  height: min(820px, 100%);
+  width: min(1000px, 100%);
+  height: min(840px, 100%);
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 24px;
   background: #fff;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 40px 100px -20px rgba(0, 0, 0, 0.35);
   opacity: 0;
-  transform: translateY(16px) scale(0.98);
+  transform: translateY(20px) scale(0.98);
   transition:
     opacity 0.25s cubic-bezier(0.33, 0, 0.67, 1),
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .booking.is-open .booking__panel {
@@ -3170,12 +3286,14 @@ html.has-modal {
 }
 
 .booking__head {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px 20px 20px 24px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-  background: var(--bg);
+  gap: 14px;
+  padding: 16px 16px 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: #fff;
 }
 
 /* Same black tile + Meet logo as the "Book a free scope call" button */
@@ -3185,7 +3303,7 @@ html.has-modal {
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #000;
 }
 
@@ -3195,43 +3313,78 @@ html.has-modal {
 }
 
 .booking__title {
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 19px;
+  line-height: 24px;
   letter-spacing: -0.03em;
   font-weight: 500;
   font-variation-settings: var(--display);
 }
 
-.booking__lead {
-  margin-top: 2px;
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--text-80);
+.booking__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  list-style: none;
+  padding: 0;
+}
+
+.booking__chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--tint);
+  font-size: 12px;
+  line-height: 16px;
   font-weight: 500;
+  color: var(--text-80);
+}
+
+/* Green dot on the first chip */
+.booking__chips li:first-child::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4cc419;
 }
 
 .booking__close {
   flex: none;
+  align-self: flex-start;
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 50%;
   background: var(--tint);
   color: #000;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.booking__close:focus { outline: none; }
+.booking__close:focus-visible {
+  outline: 2px solid #4cc419;
+  outline-offset: 2px;
 }
 
 .booking__close:hover {
-  background: #e2ecdd;
+  background: #000;
+  color: #fff;
+  transform: rotate(90deg);
 }
 
 .booking__body {
   position: relative;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
   background: #fff;
 }
 
@@ -3241,39 +3394,96 @@ html.has-modal {
   height: 100%;
   border: 0;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.4s;
 }
 
 .booking__frame.is-loaded {
   opacity: 1;
 }
 
-.booking__loading {
+/* The widget draws its own bordered card inside the frame. Crop to the card's edges so the calendar
+   sits flush in the popup (one box, not a box in a box). The frame keeps its full height, so a taller
+   step (the details form) still scrolls inside it. */
+.booking__frame {
+  width: calc(100% + 2px);
+  height: calc(100% + 1px);
+  margin: -1px 0 0 -1px;
+}
+
+/* Wide screens: the widget's card (calendar + times side by side, from ~1000px) starts 64px down and is
+   700px tall. Hide the blank band above it and size the popup to the card. */
+@media (min-width: 1048px) {
+  .booking__panel {
+    width: 1000px;
+    height: min(784px, 100%);
+  }
+  .booking__frame {
+    height: calc(100% + 65px);
+    margin-top: -65px;
+  }
+}
+
+/* Loading placeholder shaped like the calendar */
+.booking__skeleton {
   position: absolute;
   inset: 0;
+  display: grid;
+  grid-template-columns: 260px 1fr 200px;
+  gap: 40px;
+  padding: 32px 48px;
+}
+
+.booking__sk-side,
+.booking__sk-times {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 14px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-80);
 }
 
-.booking__spinner {
-  width: 28px;
-  height: 28px;
-  border: 2.5px solid var(--tint);
-  border-top-color: #000;
-  border-radius: 50%;
-  animation: booking-spin 0.8s linear infinite;
+.booking__sk-times {
+  padding-top: 64px;
 }
 
-@keyframes booking-spin {
-  to {
-    transform: rotate(360deg);
+.booking__sk-cal {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.booking__sk-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.sk {
+  display: block;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f1f5ee 25%, #e6eee1 50%, #f1f5ee 75%) 0 0 / 300% 100%;
+  animation: booking-shimmer 1.4s ease-in-out infinite;
+}
+
+.sk--logo { width: 90px; height: 20px; margin-bottom: 24px; }
+.sk--title { width: 80%; height: 26px; margin-bottom: 6px; }
+.sk--line { width: 60%; height: 14px; }
+.sk--short { width: 45%; }
+.sk--month { width: 160px; height: 22px; margin: 0 auto; }
+.sk--day { aspect-ratio: 1; border-radius: 50%; max-width: 44px; justify-self: center; width: 100%; }
+.sk--time { height: 48px; border-radius: 10px; }
+
+@keyframes booking-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+
+@media (max-width: 1047px) {
+  .booking__skeleton {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 24px 20px;
   }
+  .booking__sk-times { display: none; }
 }
 
 @media (max-width: 640px) {
@@ -3284,26 +3494,32 @@ html.has-modal {
 
   .booking__panel {
     height: 100%;
-    border-radius: 16px;
+    border-radius: 18px;
   }
 
   .booking__head {
     gap: 12px;
-    padding: 14px 14px 14px 16px;
+    padding: 12px 12px 12px 14px;
   }
 
   .booking__logo {
     width: 38px;
     height: 38px;
+    border-radius: 10px;
   }
 
   .booking__title {
-    font-size: 17px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 22px;
   }
 
-  .booking__lead {
-    font-size: 12px;
-    line-height: 17px;
+  .booking__chips li {
+    font-size: 11px;
+    padding: 2px 8px;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk { animation: none; }
+  .booking__close:hover { transform: none; }
 }

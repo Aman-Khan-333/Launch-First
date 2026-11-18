@@ -20,9 +20,11 @@ export const metadata: Metadata = {
   description:
     "A production-ready product you can put in front of users and investors. Fixed scope, fixed price of $9,999 only.",
   // Served from public/: the app/icon.png convention breaks on the apostrophe in the local folder path.
+  // "lf." monogram on the brand green, built from the logo's own letters
+  // (versioned file names so browsers drop any cached older icon).
   icons: {
-    icon: { url: "/icon.png", type: "image/png" },
-    apple: "/apple-icon.png",
+    icon: { url: "/lf-icon-v3.png", type: "image/png" },
+    apple: "/lf-apple-icon-v3.png",
   },
 };
 

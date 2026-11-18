@@ -32,11 +32,12 @@ export function Hero() {
 
         <div className="hero__content">
           <h1 className="h1">
-            Not a prototype. A working product live in{" "}
+            From Idea to Investor&#8209;Ready MVP in{" "}
             <span className="hero__mark">
               <Image className="hero__swash" src="/images/swash.png" alt="" width={230} height={60} priority />
-              <span>14 days.</span>
-            </span>
+              <span>14 Days,</span>
+            </span>{" "}
+            Fixed Cost.
           </h1>
           <p className="lead hero__lead">
             A production-ready product you can put in front of users and investors. Fixed scope and price of

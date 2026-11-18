@@ -6,20 +6,26 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ChevronRight } from "./icons";
 import { BOOKING_URL } from "./ui";
 
-// Home page menu. The white pill follows the reader: each section's link lights up once the section
-// reaches SPY_LINE (a fraction of the viewport height from the top); above them all, Home is lit.
+// Home page menu, in the order the sections appear on the page. The white pill follows the reader: each
+// section's link lights up once the section reaches SPY_LINE (a fraction of the viewport height from the
+// top); above them all, Home is lit. Portfolio is the case studies; Contact Us is the get-pricing form.
 const navLinks = [
   { label: "Home", href: "#" },
-  { label: "Case Studies", href: "#case-studies" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "Portfolio", href: "#case-studies" },
   { label: "Pricing", href: "#pricing" },
+  { label: "Contact Us", href: "#get-pricing" },
+  { label: "FAQs", href: "#faq" },
 ];
 const SPY_LINE = 0.4;
 
-// On the case study pages the menu is just these two.
-const caseStudyLinks = [
-  { label: "Home", href: "/" },
-  { label: "Case Studies", href: "/case-studies" },
-];
+// On the case study pages: the same menu, with Portfolio opening the full list and the rest
+// going back to their section on the home page.
+const caseStudyLinks = navLinks.map((l) => {
+  if (l.href === "#") return { ...l, href: "/" };
+  if (l.href === "#case-studies") return { ...l, href: "/case-studies" };
+  return { ...l, href: `/${l.href}` };
+});
 
 // Scroll distance (px) in one direction before the bar hides or comes back, so tiny jitters don't toggle it.
 const HIDE_AFTER = 8;

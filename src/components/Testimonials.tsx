@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MeetCallButton, SectionHeader } from "./ui";
 
 type VideoTestimonial = {
@@ -19,6 +19,10 @@ type VideoTestimonial = {
   role: string;
   /** Path to the video file, e.g. "/videos/founder-1.mp4". Cards without one show the poster only. */
   video?: string;
+  /** WebVTT captions for the video, e.g. "/captions/founder-1.vtt". Shown by default; viewers can switch them off (CC). */
+  captions?: string;
+  /** Length of the highlight reel at the start of the video, in seconds: the "Up next" badge shows until the founder starts introducing themselves. Omit for no badge. */
+  introSeconds?: number;
 };
 
 const headingOf = (t: VideoTestimonial) => `${t.industry} ${t.type} Delivered in ${t.delivered}`;
@@ -37,6 +41,8 @@ const testimonials: VideoTestimonial[] = [
       "I got a better overall site than what tens of thousands of dollars' worth of corporate web development companies would have done.",
     thumb: "/images/testimonials/client-1.jpg",
     video: "/videos/blake-wilson.mp4", // 720p H.264, compressed from the 1.26GB original
+    introSeconds: 28, // highlight reel ends; intro starts with "My name is Blake Wilson"
+    captions: "/captions/blake-wilson.vtt",
     name: "Blake Wilson",
     role: "Mortgage Broker & Branch Manager, Blake Talks Mortgage",
   },
@@ -50,6 +56,7 @@ const testimonials: VideoTestimonial[] = [
       "They listen to the customer's needs and build to them, and what they come up with is many times better than what I had envisioned.",
     thumb: "/images/testimonials/client-2.jpg",
     video: "/videos/darin-chase.mp4",
+    introSeconds: 23, // highlight reel ends; intro starts with "We are a mortgage lending operation"
     name: "Darin Chase",
     role: "Mortgage Lender, Rev Up Portal",
   },
@@ -63,6 +70,7 @@ const testimonials: VideoTestimonial[] = [
       "We have paid jobs already processed. It's actually ahead of time: we were expecting that in Q1 of 2027, and we're already seeing it.",
     thumb: "/images/testimonials/client-3.jpg",
     video: "/videos/dionis-taveras.mp4",
+    introSeconds: 27, // highlight reel ends; intro starts with "So, well, my name is Dionis Taveras"
     name: "Dionis Taveras",
     role: "Founder, Rush on Demand",
   },
@@ -75,6 +83,7 @@ const testimonials: VideoTestimonial[] = [
       "Finished an 80%-done React/Java app, then took on SEO: 2,037 of 2,055 pages indexed, up from 746, and 2,000 images optimised.",
     thumb: "/images/testimonials/client-4.jpg",
     video: "/videos/estelle-gonzales.mp4",
+    introSeconds: 25, // highlight reel ends; intro starts with "I've been working with your team now as the creator, founder…"
     name: "Estelle Gonzales",
     role: "Founder, 15Fashion",
   },
@@ -88,6 +97,7 @@ const testimonials: VideoTestimonial[] = [
       "Sit down with them for fifteen, twenty minutes and you'll end up where I ended up: with a top product on your hands.",
     thumb: "/images/testimonials/client-5.jpg",
     video: "/videos/godswill-peter.mp4",
+    introSeconds: 35, // highlight reel ends; intro starts with "Well, I'm Godswill"
     name: "Godswill Peter",
     role: "CEO, Nexus Innovations",
   },
@@ -101,6 +111,7 @@ const testimonials: VideoTestimonial[] = [
       "Now you've scaled threefold. I can take on more projects because they're there to back me up, with a whole team ready to rock and roll.",
     thumb: "/images/testimonials/client-6.jpg",
     video: "/videos/mike-turner.mp4",
+    introSeconds: 27, // highlight reel ends; intro starts with "Sure. Yeah. Mike Turner"
     name: "Mike Turner",
     role: "Fractional CTO, Alamo Tech",
   },
@@ -114,6 +125,7 @@ const testimonials: VideoTestimonial[] = [
       "Because your team is so dynamic and so responsive, we've been able to get to MVP more quickly and cost effectively than I could have dreamed of.",
     thumb: "/images/testimonials/client-7.jpg",
     video: "/videos/todd-degner.mp4",
+    introSeconds: 29, // highlight reel ends; intro starts with "…thank you for having me"
     name: "Todd Degner",
     role: "Founder, Terravive",
   },
@@ -127,19 +139,96 @@ function PlayIcon() {
   );
 }
 
-function VideoCard({ t }: { t: VideoTestimonial }) {
-  const [playing, setPlaying] = useState(false);
+/** Where the bottom of the captions sits, as a % of the video height: just above the controls bar,
+    which takes a bigger share of the small card than of the full screen. */
+const CAPTION_BOTTOM = { card: 76, fullscreen: 89 };
+
+/** Pin every cue at a fixed spot above the controls, so captions don't jump as the controls show and hide.
+    Chrome ignores bottom alignment for cues, so each cue's top is worked out from its line count instead.
+    Font sizes match .v-card__video::cue in globals.css. */
+function pinCaptions(video: HTMLVideoElement) {
+  const full = document.fullscreenElement === video;
+  // In full screen the video fills the screen (its own size can lag behind when the event fires)
+  const height = (full ? window.innerHeight : video.clientHeight) || 1;
+  const fontPx = full ? Math.min(52, Math.max(22, window.innerHeight * 0.036)) : 15;
+  const linePct = ((fontPx * 1.4) / height) * 100;
+  const bottom = full ? CAPTION_BOTTOM.fullscreen : CAPTION_BOTTOM.card;
+  for (const track of Array.from(video.textTracks)) {
+    for (const cue of Array.from(track.cues ?? [])) {
+      const c = cue as VTTCue;
+      const lines = c.text.split("\n").length;
+      c.snapToLines = false;
+      c.lineAlign = "start";
+      c.line = Math.max(0, bottom - lines * linePct);
+    }
+    // Chrome keeps the caption on screen where it was; toggling the track redraws it in the new spot
+    if (track.mode === "showing") {
+      track.mode = "hidden";
+      track.mode = "showing";
+    }
+  }
+}
+
+/** `playing` comes from the grid, which plays one video at a time: starting one puts the others back to their thumbnails. */
+function VideoCard({ t, playing, onPlay }: { t: VideoTestimonial; playing: boolean; onPlay: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!playing || !video || !t.captions) return;
+    const pin = () => pinCaptions(video);
+    const track = video.querySelector("track");
+    pin();
+    track?.addEventListener("load", pin);
+    document.addEventListener("fullscreenchange", pin);
+    window.addEventListener("resize", pin);
+    return () => {
+      track?.removeEventListener("load", pin);
+      document.removeEventListener("fullscreenchange", pin);
+      window.removeEventListener("resize", pin);
+    };
+  }, [playing, t.captions]);
+
+  // "Up next" intro: follows the video's own clock, so it never pauses or delays playback,
+  // and comes back if the viewer scrubs to the start.
+  const [time, setTime] = useState(0);
+  const intro = t.introSeconds ?? 0;
+  const introOn = playing && intro > 0 && time > 0.3 && time < intro;
 
   return (
     <li className="v-card">
       <div className="v-card__media">
         {playing && t.video ? (
-          <video className="v-card__video" src={t.video} poster={t.thumb} controls autoPlay playsInline />
+          <>
+            <video
+              ref={videoRef}
+              className="v-card__video"
+              src={t.video}
+              poster={t.thumb}
+              controls
+              autoPlay
+              playsInline
+              onTimeUpdate={intro ? (e) => setTime(e.currentTarget.currentTime) : undefined}
+            >
+              {t.captions && <track kind="captions" src={t.captions} srcLang="en" label="English" default />}
+            </video>
+            {intro > 0 && (
+              <div className={`v-intro${introOn ? " is-on" : ""}`} aria-hidden="true">
+                <span className="v-intro__label">
+                  <span className="v-intro__dot" />
+                  Up next
+                </span>
+                <span className="v-intro__bar">
+                  <span style={{ transform: `scaleX(${Math.min(1, time / intro)})` }} />
+                </span>
+              </div>
+            )}
+          </>
         ) : (
           <button
             type="button"
             className="v-card__poster"
-            onClick={() => t.video && setPlaying(true)}
+            onClick={() => t.video && onPlay()}
             aria-disabled={!t.video}
             aria-label={t.video ? `Play ${t.name}'s video testimonial` : `${t.name}'s video testimonial (coming soon)`}
           >
@@ -158,6 +247,9 @@ function VideoCard({ t }: { t: VideoTestimonial }) {
 
 /** Video testimonials: a static grid of call recordings. Rendered at the top of the dark case studies section. */
 export function Testimonials() {
+  // Index of the card whose video is showing; only one plays at a time
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+
   return (
     <div className="vids" id="testimonials">
       <div className="container">
@@ -172,7 +264,7 @@ export function Testimonials() {
       </div>
       <ul className="vids__grid container">
         {testimonials.map((t, i) => (
-          <VideoCard key={i} t={t} />
+          <VideoCard key={i} t={t} playing={playingIndex === i} onPlay={() => setPlayingIndex(i)} />
         ))}
       </ul>
       <div className="vids__cta container">
