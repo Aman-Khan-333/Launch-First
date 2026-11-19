@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { BookingModal } from "@/components/BookingModal";
 import { Loader } from "@/components/Loader";
+import { MetaPixel } from "@/components/MetaPixel";
 import { ProgressiveBlur } from "@/components/ProgressiveBlur";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollReveal />
         <BookingModal />
         <Loader />
+        <MetaPixel />
         <noscript>
           <style>{".loader{display:none}"}</style>
         </noscript>

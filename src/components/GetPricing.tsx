@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, ChevronRight, Mail } from "./icons";
 import { Select } from "./Select";
+import { track } from "@/lib/pixel";
 import { MeetCallButton, Pill } from "./ui";
 
 // Submissions are emailed to this inbox through FormSubmit (formsubmit.co). The very first submission makes
@@ -53,6 +54,7 @@ export function GetPricing() {
 
     setDraft(next);
     setStatus("sent");
+    track("Lead", { content_name: "Get pricing form", content_category: next.stage });
     setErrorDetail("");
     const controller = new AbortController();
     const timer = window.setTimeout(() => controller.abort(), TIMEOUT_MS);
