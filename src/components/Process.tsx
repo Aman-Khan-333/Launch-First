@@ -1,3 +1,4 @@
+import { ProcessTimeline } from "./ProcessTimeline";
 import { Pill } from "./ui";
 
 const steps = [
@@ -29,22 +30,15 @@ export function Process() {
       <div className="process__inner container">
         <div className="process__intro">
           <Pill dark>14-Day Process</Pill>
-          <h2 className="h2 process__title">From idea to a live product in 14 days.</h2>
+          <h2 className="h2 process__title">
+            From idea to a live
+            <br /> product in 14 days.
+          </h2>
           <p className="lead process__lead">
             A clear, low-risk path where the price and scope are settled before the build even starts.
           </p>
         </div>
-        <ol className="process__steps">
-          {steps.map((s) => (
-            <li key={s.n} className="step">
-              <span className="step__num">{s.n}</span>
-              <div>
-                <h3 className="step__title">{s.title}</h3>
-                <p className="step__body">{s.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <ProcessTimeline steps={steps} />
       </div>
     </section>
   );

@@ -140,9 +140,9 @@ export function Nav() {
       <div className="nav container">
         <Link href="/" className="nav__logo" aria-label="Launch First home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="nav__logo-img nav__logo-img--dark" src="/images/logo-black.png" alt="launch first." width={1000} height={173} />
+          <img className="nav__logo-img nav__logo-img--dark" src="/images/logo-black-474.png" alt="launch first." width={474} height={82} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="nav__logo-img nav__logo-img--light" src="/images/logo-white.png" alt="" width={1000} height={173} />
+          <img className="nav__logo-img nav__logo-img--light" src="/images/logo-white-474.png" alt="" width={474} height={82} />
         </Link>
         <nav ref={menuRef} className="nav__menu" aria-label="Main">
           {pill && (
@@ -170,7 +170,7 @@ export function Nav() {
             <span className="nav__cta-icon" aria-hidden="true">
               <ChevronRight />
             </span>
-            Book a Call
+            <span className="nav__cta-label">Book a Call</span>
           </a>
         </div>
       </div>

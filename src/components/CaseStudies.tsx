@@ -42,7 +42,12 @@ export function CaseStudies() {
           <SectionHeader
             dark
             pill="Case Studies"
-            title="Real products, already in users' hands."
+            title={
+              <>
+                Real products, already
+                <br /> in users&apos; hands.
+              </>
+            }
             lead="A few of the working products we've shipped for founders, each one built, owned and live."
             titleClass="process__title"
             leadClass="process__lead"

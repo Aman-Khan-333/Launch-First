@@ -113,8 +113,8 @@ export function GetPricing() {
         <div className="get-pricing__intro">
           <Pill>Get Pricing</Pill>
           <h2 className="h2 get-pricing__title">
-            See exactly what it costs before
-            <br /> you talk to anyone.
+            See exactly what it costs
+            <br /> before you talk.
           </h2>
           <p className="lead get-pricing__lead">
             Answer a few quick questions and get the full pricing, process, and a fixed-price proposal.

@@ -1,4 +1,6 @@
-import { AlertIcon, ClockIcon, EyeOffIcon, FlameIcon, LockIcon, WireframeIcon } from "./icons";
+import { HourglassIcon, PackageIcon, ScanSearchIcon, TrendDownIcon, UnlinkIcon } from "./icons";
+import Image from "next/image";
+import { FearLine } from "./FearLine";
 import { SectionHeader } from "./ui";
 
 const stats = [
@@ -8,15 +10,52 @@ const stats = [
   { value: "1 team", label: "Dedicated · direct access" },
 ];
 
+// Each concern: a two-word heading, then the concern in the founder's own voice.
 const concerns = [
-  { Icon: ClockIcon, text: "I want a working digital product built in weeks, not months for my existing customers." },
-  { Icon: EyeOffIcon, text: "I have no way to check whether what gets handed to me is solid underneath, or just looks finished." },
-  { Icon: WireframeIcon, text: "I want working software, not a stripped-down prototype, ready to put in front of customers." },
-  { Icon: AlertIcon, text: "A previous agency ran over budget, missed the deadline, or went dark mid-build." },
-  { Icon: FlameIcon, text: "I'm weighing $50–80k quotes over 2–6 months while my runway keeps ticking down." },
   {
-    Icon: LockIcon,
-    text: "I'm worried I won't truly own the code, and every change after launch will mean going back to the same agency.",
+    Icon: HourglassIcon,
+    title: "Time pressure",
+    text: (
+      <>
+        I need a working product in front of my customers in weeks, not months.
+      </>
+    ),
+  },
+  {
+    Icon: ScanSearchIcon,
+    title: "Hidden quality",
+    text: (
+      <>
+        I can&apos;t tell whether what I&apos;m handed is solid underneath, or just looks finished.
+      </>
+    ),
+  },
+  {
+    Icon: PackageIcon,
+    title: "No prototypes",
+    text: (
+      <>
+        I want real, working software, not a stripped-down prototype I can&apos;t ship.
+      </>
+    ),
+  },
+  {
+    Icon: UnlinkIcon,
+    title: "Broken trust",
+    text: (
+      <>
+        My last agency blew the budget, missed the deadline and went dark mid-build.
+      </>
+    ),
+  },
+  {
+    Icon: TrendDownIcon,
+    title: "Burning runway",
+    text: (
+      <>
+        I&apos;m weighing $50–80k quotes and 2–6 month timelines while my runway burns.
+      </>
+    ),
   },
 ];
 
@@ -38,35 +77,46 @@ export function Stats() {
 export function Concerns() {
   return (
     <section className="concerns">
+      <div className="concerns__bg" aria-hidden="true" />
       <SectionHeader
         pill="Founder Concerns"
+        titleClass="concerns__title"
         title={
           <>
-            You have the funding and the idea. What
-            <br /> you don&apos;t have is certainty.
+            You have the funding and the idea.
+            <br /> What you don&apos;t have is{" "}
+            <span className="concerns__mark">
+              <Image className="concerns__swash" src="/images/swash.png" alt="" width={230} height={60} />
+              certainty.
+            </span>
           </>
         }
         lead={
           <>
-            If you&apos;ve raised capital to build a product, you already know these and they&apos;re
-            <br /> exactly what stops you from signing off the build
+            If you&apos;ve raised capital to build a product, you already know these. They&apos;re exactly what
+            stops you from signing off the build.
           </>
         }
       />
-      <ul className="concerns__grid container">
-        {concerns.map(({ Icon, text }) => (
-          <li key={text} className="concern">
-            <span className="concern__icon">
-              <Icon />
-            </span>
-            <p className="concern__text">{text}</p>
+      <ol className="concerns__grid container">
+        {concerns.map(({ Icon, title, text }, i) => (
+          <li key={i} className="concern">
+            <div className="concern__top">
+              <span className="concern__icon">
+                <Icon />
+              </span>
+              <span className="concern__num" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="concern__body">
+              <h3 className="concern__title">{title}</h3>
+              <p className="concern__text">{text}</p>
+            </div>
           </li>
         ))}
-      </ul>
-      <p className="concerns__closing">
-        The <strong>fear</strong> was never whether it can be built. It&apos;s whether you can trust what you get and
-        what it will really <strong>cost</strong>. We <strong>remove both.</strong>
-      </p>
+      </ol>
+      <FearLine />
     </section>
   );
 }

@@ -9,10 +9,10 @@ import { useEffect, useRef, useState } from "react";
 //   exit – the screen splits into COLUMNS that slide up one by one from the right (easy ease),
 //          STAGGER_MS apart, each taking COLUMN_MS.
 // These numbers must match --loader-hold and the column timings in globals.css.
-const HOLD_MS = 900;
+const HOLD_MS = 500;
 const COLUMNS = 6;
-const COLUMN_MS = 700;
-const STAGGER_MS = 70;
+const COLUMN_MS = 600;
+const STAGGER_MS = 60;
 const EXIT_MS = COLUMN_MS + STAGGER_MS * (COLUMNS - 1);
 
 export function Loader() {
@@ -70,7 +70,7 @@ export function Loader() {
         />
       ))}
       <div className="loader__logo">
-        <Image src="/images/logo-on-green.png" alt="" width={1000} height={173} priority />
+        <Image src="/images/logo-on-green.png" alt="" width={260} height={45} sizes="260px" priority />
       </div>
     </div>
   );

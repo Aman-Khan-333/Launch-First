@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Check } from "./icons";
+import { PriceRange } from "./PriceRange";
 import { MeetCallButton, SectionHeader } from "./ui";
 
 const included = [
@@ -18,18 +19,23 @@ export function Pricing() {
       <div className="pricing__grid" aria-hidden="true" />
       <SectionHeader
         pill="Fixed Cost"
-        title="One fixed number. Agreed up front."
+        title={
+          <>
+            One fixed number. Agreed
+            <br /> right up front.
+          </>
+        }
         lead="No hourly surprises, no scope creep. You see the price before you commit to anything."
       />
       <div className="price-card">
         <div className="price-card__main">
-          <p className="price-card__under">Under</p>
+          <p className="price-card__under">Your fixed price</p>
           <p className="price-card__amount">
             $9,999 <span>(only)</span>
           </p>
+          <PriceRange />
           <p className="price-card__desc">
-            A full 14-day build starting at $4,000, capped at $9,999. The exact number is set with you before any
-            code.
+            A full 14-day build. Your exact number inside this range is set with you before any code.
           </p>
           <div className="price-card__note">
             <h3>Your exact price, on the call</h3>

@@ -4,12 +4,12 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 // Everything that slides up into place when its section scrolls into view.
+// The home hero is left out on purpose: it sits under the loading screen, which reveals it as the
+// columns lift. Hiding it (opacity 0) until then would make Google count the headline as painting
+// late and hurt LCP and Speed Index.
 const SELECTOR = [
-  // hero
+  // page headings (the home hero's is skipped in the filter below)
   ".h1",
-  ".hero__lead",
-  ".hero__actions",
-  ".strip",
   // shared section headers
   ".pill",
   ".h2",
@@ -85,7 +85,7 @@ export function ScrollReveal() {
     const sequenced = SEQUENCED.map((s) => document.querySelector<HTMLElement>(s)).filter((s): s is HTMLElement => !!s);
     // The case studies live inside .process but reveal on their own as they scroll in.
     const els = [...document.querySelectorAll<HTMLElement>(SELECTOR)].filter(
-      (el) => !sequenced.some((s) => s.contains(el)) || el.closest(".cases"),
+      (el) => (!sequenced.some((s) => s.contains(el)) || el.closest(".cases")) && !el.closest(".hero"),
     );
     els.forEach((el) => el.classList.add("reveal"));
 

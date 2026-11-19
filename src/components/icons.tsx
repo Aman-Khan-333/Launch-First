@@ -206,3 +206,70 @@ export function LockIcon({ className }: IconProps) {
     />
   );
 }
+
+/** Thin line icons (24px grid, 1.8 stroke) for the founder concern cards */
+function LineIcon({ className, children }: IconProps & { children: React.ReactNode }) {
+  return (
+    <svg
+      className={className}
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  );
+}
+
+export function HourglassIcon({ className }: IconProps) {
+  return (
+    <LineIcon className={className}>
+      <path d="M6 3h12M6 21h12" />
+      <path d="M7 3v2.5a5 5 0 0 0 2.2 4.1L12 12l2.8-2.4A5 5 0 0 0 17 5.5V3" />
+      <path d="M7 21v-2.5a5 5 0 0 1 2.2-4.1L12 12l2.8 2.4a5 5 0 0 1 2.2 4.1V21" />
+    </LineIcon>
+  );
+}
+
+export function ScanSearchIcon({ className }: IconProps) {
+  return (
+    <LineIcon className={className}>
+      <path d="M3 8V6a3 3 0 0 1 3-3h2M16 3h2a3 3 0 0 1 3 3v2M21 16v2a3 3 0 0 1-3 3h-2M8 21H6a3 3 0 0 1-3-3v-2" />
+      <circle cx="11.5" cy="11.5" r="3" />
+      <path d="m13.8 13.8 2.2 2.2" />
+    </LineIcon>
+  );
+}
+
+export function PackageIcon({ className }: IconProps) {
+  return (
+    <LineIcon className={className}>
+      <path d="M12 3 20 7.5v9L12 21l-8-4.5v-9Z" />
+      <path d="m4 7.5 8 4.5 8-4.5M12 12v9M8 5.3l8 4.5" />
+    </LineIcon>
+  );
+}
+
+export function UnlinkIcon({ className }: IconProps) {
+  return (
+    <LineIcon className={className}>
+      <path d="M9.5 6.5 11 5a4.2 4.2 0 0 1 6 6l-1.5 1.5M14.5 17.5 13 19a4.2 4.2 0 0 1-6-6l1.5-1.5" />
+      <path d="m4 4 16 16" />
+    </LineIcon>
+  );
+}
+
+export function TrendDownIcon({ className }: IconProps) {
+  return (
+    <LineIcon className={className}>
+      <path d="m3 7 6.5 6.5 4-4L21 17" />
+      <path d="M15 17h6v-6" />
+    </LineIcon>
+  );
+}

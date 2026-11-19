@@ -57,6 +57,7 @@ const testimonials: VideoTestimonial[] = [
     thumb: "/images/testimonials/client-2.jpg",
     video: "/videos/darin-chase.mp4",
     introSeconds: 23, // highlight reel ends; intro starts with "We are a mortgage lending operation"
+    captions: "/captions/darin-chase.vtt",
     name: "Darin Chase",
     role: "Mortgage Lender, Rev Up Portal",
   },
@@ -71,6 +72,7 @@ const testimonials: VideoTestimonial[] = [
     thumb: "/images/testimonials/client-3.jpg",
     video: "/videos/dionis-taveras.mp4",
     introSeconds: 27, // highlight reel ends; intro starts with "So, well, my name is Dionis Taveras"
+    captions: "/captions/dionis-taveras.vtt",
     name: "Dionis Taveras",
     role: "Founder, Rush on Demand",
   },
@@ -84,6 +86,7 @@ const testimonials: VideoTestimonial[] = [
     thumb: "/images/testimonials/client-4.jpg",
     video: "/videos/estelle-gonzales.mp4",
     introSeconds: 25, // highlight reel ends; intro starts with "I've been working with your team now as the creator, founder…"
+    captions: "/captions/estelle-gonzales.vtt",
     name: "Estelle Gonzales",
     role: "Founder, 15Fashion",
   },
@@ -98,6 +101,7 @@ const testimonials: VideoTestimonial[] = [
     thumb: "/images/testimonials/client-5.jpg",
     video: "/videos/godswill-peter.mp4",
     introSeconds: 35, // highlight reel ends; intro starts with "Well, I'm Godswill"
+    captions: "/captions/godswill-peter.vtt",
     name: "Godswill Peter",
     role: "CEO, Nexus Innovations",
   },
@@ -112,6 +116,7 @@ const testimonials: VideoTestimonial[] = [
     thumb: "/images/testimonials/client-6.jpg",
     video: "/videos/mike-turner.mp4",
     introSeconds: 27, // highlight reel ends; intro starts with "Sure. Yeah. Mike Turner"
+    captions: "/captions/mike-turner.vtt",
     name: "Mike Turner",
     role: "Fractional CTO, Alamo Tech",
   },
@@ -126,6 +131,7 @@ const testimonials: VideoTestimonial[] = [
     thumb: "/images/testimonials/client-7.jpg",
     video: "/videos/todd-degner.mp4",
     introSeconds: 29, // highlight reel ends; intro starts with "…thank you for having me"
+    captions: "/captions/todd-degner.vtt",
     name: "Todd Degner",
     role: "Founder, Terravive",
   },
@@ -139,11 +145,11 @@ function PlayIcon() {
   );
 }
 
-/** Where the bottom of the captions sits, as a % of the video height: just above the controls bar,
-    which takes a bigger share of the small card than of the full screen. */
-const CAPTION_BOTTOM = { card: 76, fullscreen: 89 };
+/** Gap between the bottom of the captions and the bottom of the video, in px. The captions sit low, behind the
+    controls bar while it shows, with a little breathing room from the edge. Full screen scales with the screen. */
+const captionGapPx = (full: boolean) => (full ? Math.max(24, window.innerHeight * 0.035) : 16);
 
-/** Pin every cue at a fixed spot above the controls, so captions don't jump as the controls show and hide.
+/** Pin every cue at a fixed spot near the bottom, so captions don't jump as the controls show and hide.
     Chrome ignores bottom alignment for cues, so each cue's top is worked out from its line count instead.
     Font sizes match .v-card__video::cue in globals.css. */
 function pinCaptions(video: HTMLVideoElement) {
@@ -152,7 +158,7 @@ function pinCaptions(video: HTMLVideoElement) {
   const height = (full ? window.innerHeight : video.clientHeight) || 1;
   const fontPx = full ? Math.min(52, Math.max(22, window.innerHeight * 0.036)) : 15;
   const linePct = ((fontPx * 1.4) / height) * 100;
-  const bottom = full ? CAPTION_BOTTOM.fullscreen : CAPTION_BOTTOM.card;
+  const bottom = 100 - (captionGapPx(full) / height) * 100;
   for (const track of Array.from(video.textTracks)) {
     for (const cue of Array.from(track.cues ?? [])) {
       const c = cue as VTTCue;
@@ -256,7 +262,12 @@ export function Testimonials() {
         <SectionHeader
           dark
           pill="Testimonials"
-          title="Founders who launched first & kept going."
+          title={
+            <>
+              Founders who launched
+              <br /> first &amp; kept going.
+            </>
+          }
           lead="Real products shipped in two weeks, trusted by users, backed by investors and built through direct collaboration."
           titleClass="process__title"
           leadClass="process__lead"

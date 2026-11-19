@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Asterisk } from "./icons";
 import { MeetCallButton } from "./ui";
+import { StripHover } from "./StripHover";
 
 // Projects in order; the marquee loops through three copies of this set. Each project shows one name.
 // Products with a web and a mobile app show both screens side by side (the phone card is narrower) under one name.
@@ -28,16 +29,17 @@ export function Hero() {
   return (
     <>
       <section className="hero">
-        <Image className="hero__glow" src="/images/hero-glow.png" alt="" width={580} height={676} priority />
+        {/* Decorative: loads after the headline and fonts instead of competing with them */}
+        <Image className="hero__glow" src="/images/hero-glow.png" alt="" width={580} height={676} loading="eager" fetchPriority="low" />
 
         <div className="hero__content">
           <h1 className="h1">
-            From Idea to Investor&#8209;Ready MVP in{" "}
+            From Idea to Investor&#8209;Ready MVP in Just{" "}
             <span className="hero__mark">
               <Image className="hero__swash" src="/images/swash.png" alt="" width={230} height={60} priority />
-              <span>14 Days,</span>
-            </span>{" "}
-            Fixed Cost.
+              <span>14 Days</span>
+            </span>
+            .
           </h1>
           <p className="lead hero__lead">
             A production-ready product you can put in front of users and investors. Fixed scope and price of
@@ -48,7 +50,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="strip" aria-hidden="true">
+        <StripHover>
           <div className="strip__track">
             {marquee.map((p) => (
               <div key={p.key} className="strip__item">
@@ -63,8 +65,11 @@ export function Hero() {
                         alt=""
                         width={mobile ? 390 : 850}
                         height={mobile ? 847 : 844}
-                        sizes={mobile ? "195px" : "426px"}
-                        priority={p.copy === 1 && p.i < VISIBLE_AT_LOAD}
+                        // Card widths from globals.css (smaller under 640px), so phones get phone-sized files
+                        sizes={mobile ? "(max-width: 640px) 132px, 224px" : "(max-width: 640px) 288px, 490px"}
+                        // First cards load straight away, but without high priority: they sit under the loading
+                        // screen, so the headline and fonts get the bandwidth first.
+                        loading={p.copy === 1 && p.i < VISIBLE_AT_LOAD ? "eager" : "lazy"}
                       />
                     );
                   })}
@@ -76,7 +81,7 @@ export function Hero() {
               </div>
             ))}
           </div>
-        </div>
+        </StripHover>
       </section>
 
       <div className="band">
