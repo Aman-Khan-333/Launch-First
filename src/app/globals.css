@@ -123,6 +123,11 @@ img {
   margin-top: 20px;
 }
 
+/* Line break that only applies on phones */
+.br-phone {
+  display: none;
+}
+
 /* Body text is capped to its heading's width (LeadFit.tsx) and fills that width, without leaving a single
    word on the last line */
 .lead {
@@ -2956,10 +2961,11 @@ html.bento-cursor-on * {
   display: flex;
 }
 
+/* Full-width buttons: the label is centred in the space to the right of the icon, so it never crowds it */
 .btn-primary--block {
   justify-content: center;
   width: 100%;
-  padding: 0;
+  padding: 0 20px 0 62px;
 }
 
 .btn-primary--block .btn-primary__icon,
@@ -3453,7 +3459,7 @@ html.bento-cursor-on * {
   justify-content: center;
   width: 100%;
   margin-top: 26px;
-  padding: 0;
+  padding: 0 20px 0 62px;
   font-size: 18px;
 }
 
@@ -3713,17 +3719,63 @@ button.btn-primary {
 /* Uses `translate` (not `transform`) so it stacks with elements already positioned by transform.
    --rs scales every reveal duration and delay to the reader's scroll speed (set in ScrollReveal):
    below 1 when scrolling fast, above 1 when scrolling slowly. */
+/* Blocks blur in as they rise: start soft and transparent, sharpen into place */
 .reveal {
   opacity: 0;
   translate: 0 40px;
+  filter: blur(12px);
   transition:
     opacity calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) var(--d, 0s),
-    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) var(--d, 0s);
+    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) var(--d, 0s),
+    filter calc(0.75s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) var(--d, 0s);
 }
 
 .reveal.is-revealed {
   opacity: 1;
   translate: none;
+  filter: none;
+}
+
+/* Headings blur in word by word (HeadingWords.tsx adds .words, then .words-in once in view) */
+.words .word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  translate: 0 0.22em;
+  transition:
+    opacity 0.6s cubic-bezier(0.33, 0, 0.67, 1),
+    filter 0.7s cubic-bezier(0.33, 0, 0.67, 1),
+    translate 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i) * var(--word-stagger, 0.07s));
+}
+
+.words.words-in .word {
+  opacity: 1;
+  filter: none;
+  translate: none;
+}
+
+/* The swash under "certainty." follows once the words are in */
+.words .concerns__swash {
+  opacity: 0;
+  filter: blur(8px);
+  transition:
+    opacity 0.6s cubic-bezier(0.33, 0, 0.67, 1),
+    filter 0.7s cubic-bezier(0.33, 0, 0.67, 1);
+}
+
+.words.words-in .concerns__swash {
+  opacity: 1;
+  filter: none;
+  transition-delay: 0.85s;
+}
+
+/* Headings inside the choreographed sections stay put; their words do the revealing */
+.approach.will-reveal .section-header > .h2,
+.process.will-reveal .process__intro > .h2 {
+  opacity: 1;
+  translate: none;
+  filter: none;
 }
 
 /* ---------- Stats: the four figures push up from below, one after another ---------- */
@@ -3731,14 +3783,16 @@ button.btn-primary {
 .stats.will-reveal .stats__item {
   opacity: 0;
   translate: 0 40px;
+  filter: blur(12px);
   transition:
     opacity calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)),
-    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1));
+    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)), filter calc(0.75s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1));
 }
 
 .stats.is-active .stats__item {
   opacity: 1;
   translate: none;
+  filter: none;
 }
 
 .stats__item:nth-child(1) { --t: 0s; }
@@ -3751,14 +3805,16 @@ button.btn-primary {
 .approach.will-reveal .section-header > * {
   opacity: 0;
   translate: 0 40px;
+  filter: blur(12px);
   transition:
     opacity calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)),
-    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1));
+    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)), filter calc(0.75s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1));
 }
 
 .approach.is-active .section-header > * {
   opacity: 1;
   translate: none;
+  filter: none;
 }
 
 /* Bento cards reveal one by one as each scrolls into view (BentoReveal.tsx sets .is-in and the stagger --d):
@@ -3821,9 +3877,10 @@ button.btn-primary {
 .process.will-reveal .step__body {
   opacity: 0;
   translate: 0 40px;
+  filter: blur(12px);
   transition:
     opacity calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)),
-    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1));
+    translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)), filter calc(0.75s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1));
 }
 
 .process.is-active .process__intro > *,
@@ -3832,6 +3889,7 @@ button.btn-primary {
 .process.is-active .step__body {
   opacity: 1;
   translate: none;
+  filter: none;
 }
 
 /* Keep the timeline nodes' colour change smooth alongside the reveal transitions */
@@ -3839,6 +3897,7 @@ button.btn-primary {
   transition:
     opacity calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)),
     translate calc(0.65s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)),
+    filter calc(0.75s * var(--rs, 1)) cubic-bezier(0.33, 0, 0.67, 1) calc(var(--t, 0s) * var(--rs, 1)),
     background-color 0.4s cubic-bezier(0.33, 0, 0.67, 1),
     border-color 0.4s cubic-bezier(0.33, 0, 0.67, 1),
     color 0.4s cubic-bezier(0.33, 0, 0.67, 1),
@@ -4009,8 +4068,10 @@ html.lenis.lenis-stopped {
     padding: 14px 0;
   }
 
-  .stats__list,
   .stats__list {
+    width: auto;
+    margin-left: 40px;
+    margin-right: 40px;
     flex-wrap: wrap;
     row-gap: 24px;
   }
@@ -4075,9 +4136,13 @@ html.lenis.lenis-stopped {
     width: 100%;
   }
 
-  /* Stacked layout: the intro scrolls normally above the steps */
+  /* Stacked layout: the intro scrolls normally above the steps, which sit closer underneath it */
   .process__intro {
     position: static;
+  }
+
+  .process__steps {
+    margin-top: 0;
   }
 
   .price-card {
@@ -4114,7 +4179,14 @@ html.lenis.lenis-stopped {
   .price-card__panel {
     width: 100%;
     height: auto;
-    padding: 32px 28px 100px;
+    padding: 32px 28px 108px;
+  }
+
+  /* Button spans the panel with the same 28px inset as the list above it */
+  .price-card__cta {
+    left: 28px;
+    right: 28px;
+    bottom: 28px;
   }
 
   .faq__list {
@@ -4138,11 +4210,13 @@ html.lenis.lenis-stopped {
     grid-template-columns: 1fr;
   }
 
+  /* Stacked: heading, text and button centred */
   .vids__cta {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin-top: 48px;
     padding-top: 36px;
+    text-align: center;
   }
 
   .vids + .cases {
@@ -4241,6 +4315,7 @@ html.lenis.lenis-stopped {
   .concerns__closing {
     margin-top: 48px;
     font-size: 24px;
+    line-height: 29px;
   }
 
   .concern__text {
@@ -4297,18 +4372,46 @@ html.lenis.lenis-stopped {
   }
 
   .h1 {
-    font-size: 42px; /* largest size that still wraps to 3 lines down to 360px wide */
-    line-height: 50px;
+    font-size: 45px;
+    line-height: 47px;
+    letter-spacing: -2.27px;
   }
 
   .h2 {
-    font-size: 30px;
+    font-size: 36px;
     line-height: 38px;
+    letter-spacing: -1.61px;
   }
 
   .h2 br,
   .lead br {
     display: none;
+  }
+
+  /* Testimonials heading stays on two lines ("Founders who launched / first & kept going."): it uses the full
+     width and only shrinks below 36px on phones too narrow for the first line */
+  .vids .section-header,
+  .cases .section-header {
+    padding-inline: 0;
+  }
+
+  .vids .h2 {
+    font-size: min(36px, calc((100vw - 40px) / 9.7));
+  }
+
+  .vids .h2 br,
+  .h2 br.br-phone,
+  .h2 br.br-always {
+    display: inline;
+  }
+
+  /* Case studies intro: two lines on phones. It uses the full width (not the heading's) and only shrinks
+     below 16px where the phone is too narrow for two lines */
+  .cases .lead {
+    --leadfit: off;
+    max-width: none;
+    font-size: min(16px, calc((100vw - 40px) / 22.1));
+    text-wrap: balance;
   }
 
   .lead {

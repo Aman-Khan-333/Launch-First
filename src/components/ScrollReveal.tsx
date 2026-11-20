@@ -7,12 +7,10 @@ import { useEffect } from "react";
 // The home hero is left out on purpose: it sits under the loading screen, which reveals it as the
 // columns lift. Hiding it (opacity 0) until then would make Google count the headline as painting
 // late and hurt LCP and Speed Index.
+// Headings aren't listed: they blur in word by word instead (HeadingWords.tsx).
 const SELECTOR = [
-  // page headings (the home hero's is skipped in the filter below)
-  ".h1",
   // shared section headers
   ".pill",
-  ".h2",
   ".lead",
   // founder concerns
   ".concern",
@@ -29,13 +27,16 @@ const SELECTOR = [
   // pricing + testimonials
   ".price-card",
   ".v-card",
-  ".vids__cta",
+  ".vids__cta > div > p",
+  ".vids__cta .meet-glow",
   // get pricing
   ".get-pricing__points li",
   ".get-pricing .mail-link",
   ".form__row",
   ".form > .field",
   ".btn-primary--form",
+  // remaining boxes (bento cards, process steps and stats run their own sequences)
+  ".cases__more",
   // faq + footer
   ".faq__item",
   ".footer__card",

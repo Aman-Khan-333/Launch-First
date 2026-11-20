@@ -16,7 +16,13 @@ export function Comparison() {
     <section className="compare">
       <SectionHeader
         pill="Reality Check"
-        title="The usual build vs. Launch First."
+        title={
+          <>
+            {/* One line on desktop and tablet; on phones it breaks before "Launch First." */}
+            The usual build vs. <br className="br-phone" />
+            Launch First.
+          </>
+        }
         lead="The two things that keep founders from committing timeline and trust handled before you start."
       />
       <div className="compare__link">

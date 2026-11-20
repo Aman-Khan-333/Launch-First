@@ -7,6 +7,7 @@ import { ProgressiveBlur } from "@/components/ProgressiveBlur";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { LeadFit } from "@/components/LeadFit";
+import { HeadingWords } from "@/components/HeadingWords";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ProgressiveBlur />
         <ScrollReveal />
         <LeadFit />
+        <HeadingWords />
         <BookingModal />
         <Loader />
         <MetaPixel />

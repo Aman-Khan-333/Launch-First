@@ -21,7 +21,8 @@ function widestLine(el: HTMLElement) {
 
 /**
  * Keeps every section's body text no wider than its heading: the paragraph after each h1/h2 is capped at the
- * heading's widest line. Re-measured once fonts load and whenever the window resizes, on every page.
+ * heading's widest line (unless the stylesheet sets --leadfit: off on it). Re-measured once fonts load and
+ * whenever the window resizes, on every page.
  */
 export function LeadFit() {
   const pathname = usePathname();
@@ -41,6 +42,8 @@ export function LeadFit() {
       // Measure everything first with the caps off, then apply, so the page lays out only once
       pairs.forEach(([, lead]) => (lead.style.maxWidth = ""));
       const widths = pairs.map(([heading, lead]) => {
+        // A stylesheet can opt a paragraph out at some sizes with --leadfit: off
+        if (getComputedStyle(lead).getPropertyValue("--leadfit").trim() === "off") return 0;
         // Never loosen a narrower limit the stylesheet already sets
         const own = parseFloat(getComputedStyle(lead).maxWidth);
         const head = widestLine(heading);

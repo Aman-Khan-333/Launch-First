@@ -32,7 +32,8 @@ export function Process() {
           <Pill dark>14-Day Process</Pill>
           <h2 className="h2 process__title">
             From idea to a live
-            <br /> product in 14 days.
+            {/* Kept on phones too, so "product" always starts the second line */}
+            <br className="br-always" /> product in 14 days.
           </h2>
           <p className="lead process__lead">
             A clear, low-risk path where the price and scope are settled before the build even starts.
