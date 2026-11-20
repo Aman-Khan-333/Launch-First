@@ -145,20 +145,14 @@ function PlayIcon() {
   );
 }
 
-/** Gap between the bottom of the captions and the bottom of the video, in px. The captions sit low, behind the
-    controls bar while it shows, with a little breathing room from the edge. Full screen scales with the screen. */
-const captionGapPx = (full: boolean) => (full ? Math.max(24, window.innerHeight * 0.035) : 16);
-
-/** Pin every cue at a fixed spot near the bottom, so captions don't jump as the controls show and hide.
+/** Full screen only (the card draws its own captions, see VideoCard): pin every cue near the bottom.
     Chrome ignores bottom alignment for cues, so each cue's top is worked out from its line count instead.
-    Font sizes match .v-card__video::cue in globals.css. */
+    Font size matches .v-card__video::cue in globals.css. */
 function pinCaptions(video: HTMLVideoElement) {
-  const full = document.fullscreenElement === video;
-  // In full screen the video fills the screen (its own size can lag behind when the event fires)
-  const height = (full ? window.innerHeight : video.clientHeight) || 1;
-  const fontPx = full ? Math.min(52, Math.max(22, window.innerHeight * 0.036)) : 15;
+  const height = window.innerHeight || 1;
+  const fontPx = Math.min(52, Math.max(22, window.innerHeight * 0.036));
   const linePct = ((fontPx * 1.4) / height) * 100;
-  const bottom = 100 - (captionGapPx(full) / height) * 100;
+  const bottom = 100 - (Math.max(24, window.innerHeight * 0.035) / height) * 100;
   for (const track of Array.from(video.textTracks)) {
     for (const cue of Array.from(track.cues ?? [])) {
       const c = cue as VTTCue;
@@ -178,20 +172,70 @@ function pinCaptions(video: HTMLVideoElement) {
 /** `playing` comes from the grid, which plays one video at a time: starting one puts the others back to their thumbnails. */
 function VideoCard({ t, playing, onPlay }: { t: VideoTestimonial; playing: boolean; onPlay: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [caption, setCaption] = useState<string[]>([]);
 
+  // Captions. Chrome lifts its own captions above the controls bar whenever the controls show (paused, hovering),
+  // which puts them on the speaker's face. So in the card the track runs "hidden" and we draw the current line
+  // ourselves, pinned near the bottom of the frame. In full screen (where our overlay can't follow) Chrome's own
+  // captions take over, pinned low. The CC menu still works: picking English or Off is respected.
   useEffect(() => {
     const video = videoRef.current;
     if (!playing || !video || !t.captions) return;
-    const pin = () => pinCaptions(video);
-    const track = video.querySelector("track");
-    pin();
-    track?.addEventListener("load", pin);
-    document.addEventListener("fullscreenchange", pin);
-    window.addEventListener("resize", pin);
+    const tracks = video.textTracks;
+    let wanted = true; // viewer's CC choice
+    let syncing = false;
+
+    const current = () => tracks[0] ?? null;
+    const sync = () => {
+      const track = current();
+      if (!track) return;
+      syncing = true;
+      const full = document.fullscreenElement === video;
+      if (!wanted) track.mode = "disabled";
+      else if (full) {
+        track.mode = "showing";
+        pinCaptions(video);
+      } else track.mode = "hidden";
+      syncing = false;
+      update();
+    };
+    const update = () => {
+      const track = current();
+      const full = document.fullscreenElement === video;
+      if (!track || !wanted || full || !track.activeCues) return setCaption([]);
+      setCaption(
+        Array.from(track.activeCues)
+          .map((c) => (c as VTTCue).text)
+          .join("\n")
+          .split("\n"),
+      );
+    };
+    // The viewer used the CC menu: "showing" means captions on, "disabled" means off
+    const onChange = () => {
+      if (syncing) return;
+      const track = current();
+      if (!track) return;
+      const full = document.fullscreenElement === video;
+      if (track.mode === "showing" && !full) wanted = true;
+      else if (track.mode === "disabled") wanted = false;
+      else if (track.mode === "showing" && full) wanted = true;
+      sync();
+    };
+
+    const trackEl = video.querySelector("track");
+    sync();
+    trackEl?.addEventListener("load", sync);
+    tracks.addEventListener("change", onChange);
+    const cueTrack = current();
+    cueTrack?.addEventListener("cuechange", update);
+    document.addEventListener("fullscreenchange", sync);
+    window.addEventListener("resize", sync);
     return () => {
-      track?.removeEventListener("load", pin);
-      document.removeEventListener("fullscreenchange", pin);
-      window.removeEventListener("resize", pin);
+      trackEl?.removeEventListener("load", sync);
+      tracks.removeEventListener("change", onChange);
+      cueTrack?.removeEventListener("cuechange", update);
+      document.removeEventListener("fullscreenchange", sync);
+      window.removeEventListener("resize", sync);
     };
   }, [playing, t.captions]);
 
@@ -218,6 +262,13 @@ function VideoCard({ t, playing, onPlay }: { t: VideoTestimonial; playing: boole
             >
               {t.captions && <track kind="captions" src={t.captions} srcLang="en" label="English" default />}
             </video>
+            {caption.length > 0 && (
+              <div className="v-cap" aria-hidden="true">
+                {caption.map((line, i) => (
+                  <span key={i}>{line}</span>
+                ))}
+              </div>
+            )}
             {intro > 0 && (
               <div className={`v-intro${introOn ? " is-on" : ""}`} aria-hidden="true">
                 <span className="v-intro__label">

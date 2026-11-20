@@ -651,26 +651,28 @@ img {
 }
 
 /*
- * Endless marquee: three copies of the card set. One set = 8 web cards (489.13px) + 2 phone cards (223.84px)
- * + 8 gaps between projects (36px) + 2 gaps inside the two-screen projects (14px) = 4676.72px.
+ * Endless marquee: three copies of the card set. One set = 9 screen cards (720px, all the same width)
+ * + 9 gaps between projects (28px) = 6732px.
  * It starts with the 2nd copy's first card at x = -95.33 in the 1920 frame (as in the design)
  * and slides one full set to the left, which lands on an identical frame.
  */
 .strip__track {
   position: absolute;
   top: 0;
-  left: calc(50% - 1055.33px - 4676.72px);
+  left: calc(50% - 1055.33px - 6732px);
   display: flex;
-  gap: 36px; /* space between projects */
-  animation: strip-scroll 88.2s linear infinite; /* ~53px/s; slows on hover (StripHover.tsx) */
+  gap: 28px; /* space between projects */
+  animation: strip-scroll 126.9s linear infinite; /* ~53px/s; slows on hover (StripHover.tsx) */
   will-change: transform;
 }
 
 .strip__card {
   flex: none;
-  width: 489.13px;
+  width: 720px;
   height: 486px;
   border-radius: 12px;
+  object-fit: cover; /* every card the same size; the screenshot fills it from the top-left */
+  object-position: left top;
 }
 
 /* One project: its card(s) with the name underneath.
@@ -721,13 +723,13 @@ img {
 
 @keyframes strip-scroll {
   to {
-    transform: translateX(-4676.72px); /* one set: 8 projects + 8 gaps */
+    transform: translateX(-6732px); /* one set: 9 projects + 9 gaps */
   }
 }
 
 @keyframes strip-scroll-mobile {
   to {
-    transform: translateX(-2775.12px);
+    transform: translateX(-3970.8px);
   }
 }
 
@@ -3067,6 +3069,31 @@ html.bento-cursor-on * {
 }
 
 /* "Up next" intro card over the opening seconds of a testimonial. Purely visual: clicks pass through to the video. */
+/* Card captions (drawn by VideoCard): pinned near the bottom of the frame, under the controls bar's level,
+   so they never sit on the speaker. Clicks pass through to the controls. */
+.v-cap {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.v-cap span {
+  padding: 1px 6px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
 .v-intro {
   position: absolute;
   top: 12px;
@@ -4434,7 +4461,7 @@ html.lenis.lenis-stopped {
   }
 
   /* Product marquee: back in the flow under the CTA, with smaller cards.
-     One set is 8 × 287.5px + 2 phones × 131.56px + 8 × 24px + 2 × 10px = 2775.12px; start on the 2nd copy and slide one set left. */
+     One set is 9 screens × 423.2px + 9 × 18px = 3970.8px; start on the 2nd copy and slide one set left. */
   .strip {
     position: relative;
     top: auto;
@@ -4443,14 +4470,14 @@ html.lenis.lenis-stopped {
   }
 
   .strip__track {
-    left: -2775.12px;
-    gap: 24px;
+    left: -3970.8px;
+    gap: 18px;
     animation-name: strip-scroll-mobile;
-    animation-duration: 53.4s; /* ~52px/s */
+    animation-duration: 76.4s; /* ~52px/s */
   }
 
   .strip__card {
-    width: 287.5px;
+    width: 423.2px;
     height: 285.66px;
     border-radius: 10px;
   }
