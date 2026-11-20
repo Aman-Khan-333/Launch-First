@@ -42,7 +42,7 @@ export default async function CaseStudyPage({ params }: Props) {
       <main>
         {/* Same green glow as the home page hero, top right */}
         <div className="cs-top">
-          <Image className="hero__glow" src="/images/hero-glow.png" alt="" width={580} height={676} priority />
+          <Image className="hero__glow" src="/images/hero-corner-glow.webp" alt="" width={1200} height={1010} sizes="1000px" priority unoptimized />
           <header className="cs-hero container">
             <Link href="/case-studies" className="cs-back">
               <span className="cs-back__icon" aria-hidden="true">

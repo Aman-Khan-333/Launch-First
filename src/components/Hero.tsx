@@ -30,7 +30,7 @@ export function Hero() {
     <>
       <section className="hero">
         {/* Decorative: loads after the headline and fonts instead of competing with them */}
-        <Image className="hero__glow" src="/images/hero-glow.png" alt="" width={580} height={676} loading="eager" fetchPriority="low" />
+        <Image className="hero__glow" src="/images/hero-corner-glow.webp" alt="" width={1200} height={1010} sizes="1000px" loading="eager" fetchPriority="low" unoptimized />
 
         <div className="hero__content">
           <h1 className="h1">
