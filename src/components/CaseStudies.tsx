@@ -1,23 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-import { cases, type CaseStudy } from "@/data/cases";
+import { cardImage, cases, phoneScreens, type CaseStudy } from "@/data/cases";
+import { CaseScene } from "./CaseScene";
 import { Testimonials } from "./Testimonials";
 import { PrimaryButton, SectionHeader } from "./ui";
 
 /** Screenshot card linking to the project's case study. Used on the home page, /case-studies and the detail pages. */
 export function CaseCard({ c }: { c: CaseStudy }) {
+  const img = cardImage(c);
   return (
     <li className="case">
       <Link href={`/case-studies/${c.slug}`} className="case__link">
         <div className="case__frame">
           <div className="case__shot">
+            {phoneScreens(c).length >= 3 ? (
+              <CaseScene c={c} variant="tile" />
+            ) : (
             <Image
-              src={`/images/hero/${c.image}.png`}
+              src={img.src}
               alt={`${c.name} product screenshot`}
-              width={850}
-              height={844}
+              width={img.width}
+              height={img.height}
               sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 440px"
             />
+            )}
           </div>
         </div>
         <div className="case__head">
@@ -30,7 +36,7 @@ export function CaseCard({ c }: { c: CaseStudy }) {
 }
 
 // Listed on /case-studies but left off the home page selection.
-const HIDDEN_ON_HOME = ["beneficiary-platform", "flightpath"];
+const HIDDEN_ON_HOME = ["beneficiary-platform", "flightpath", "herd", "my-focus-5", "food-prediction-app", "eye-detect"];
 const homeCases = cases.filter((c) => !HIDDEN_ON_HOME.includes(c.slug)).slice(0, 6);
 
 export function CaseStudies() {

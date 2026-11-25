@@ -24,6 +24,12 @@ const SELECTOR = [
   ".cs-meta",
   ".cs-body__text > *",
   ".cs-body__media",
+  ".cs2-intro__side",
+  ".cs2-filters",
+  ".cs2-banner",
+  ".cs2-row",
+  ".cs2-app",
+  ".cs2-outcome",
   // pricing + testimonials
   ".price-card",
   ".v-card",
