@@ -45,7 +45,10 @@ export function Footer({ base = "" }: { base?: string }) {
       </div>
       <div className="footer__bottom">
         <p>© 2026 LaunchFirst. All rights reserved.</p>
-        <p>A working product in 14 days.</p>
+        <nav className="footer__legal" aria-label="Legal">
+          <Link href="/privacy">Privacy Policy</Link>
+          <Link href="/terms">Terms of Service</Link>
+        </nav>
       </div>
     </footer>
   );
