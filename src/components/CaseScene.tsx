@@ -20,7 +20,7 @@ export function Phone({ screen, sizes, priority = false, className = "" }: {
 }
 
 /** Browser window with the product screenshot, floating on the scene's backdrop. */
-function Window({ c, sizes, priority }: { c: CaseStudy; sizes: string; priority: boolean }) {
+export function Window({ c, sizes, priority }: { c: CaseStudy; sizes: string; priority: boolean }) {
   const img = cardImage(c);
   return (
     <div className="scene__window">
@@ -47,9 +47,8 @@ export function CaseScene({ c, variant, priority = false }: { c: CaseStudy; vari
   const hero = variant === "hero";
   const winSizes = hero ? "(max-width: 900px) 100vw, 1000px" : "(max-width: 760px) 100vw, 640px";
   const phoneSizes = hero ? "(max-width: 900px) 30vw, 260px" : "(max-width: 760px) 30vw, 180px";
-  // Web + mobile products show the dashboard with the app in front of it; app-only products, their phones.
-  const webAndApp = !!c.image && phones.length > 0 && c.kind.includes("web");
-  const layout = c.mockup ? "mockup" : webAndApp ? "combo" : phones.length >= 3 ? "phones" : phones.length ? "combo" : "web";
+  // Apps with designed screens stand as three phones; a web product sits whole in its browser window.
+  const layout = c.mockup ? "mockup" : phones.length >= 3 ? "phones" : phones.length ? "combo" : "web";
   const style = { "--t1": c.tint[0], "--t2": c.tint[1] } as React.CSSProperties;
 
   return (

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CaseCard } from "@/components/CaseStudies";
-import { CaseScene, Phone } from "@/components/CaseScene";
+import { CaseScene, Phone, Window } from "@/components/CaseScene";
 import { Footer } from "@/components/Footer";
 import { Asterisk, Check, ChevronRight } from "@/components/icons";
 import { Nav } from "@/components/Nav";
@@ -158,6 +158,25 @@ export default async function CaseStudyPage({ params }: Props) {
             </ol>
           </div>
         </section>
+
+        {/* Web + mobile products whose banner shows the app: the web dashboard, whole, in its own section */}
+        {c.image && c.screens && c.kind.includes("web") && (
+          <section className="cs2-web container">
+            <div className="cs2-web__stage">
+              <div className="cs2-web__text">
+                <Label>Web dashboard</Label>
+                <h2 className="cs2-app__title">The {c.name} dashboard</h2>
+                <p className="cs2-copy">
+                  The web side of {c.name}, where the business runs the day: everything the app books and sells, in
+                  one place.
+                </p>
+              </div>
+              <div className="cs2-web__frame" style={{ "--t1": c.tint[0], "--t2": c.tint[1] } as React.CSSProperties}>
+                <Window c={c} sizes="(max-width: 1100px) 100vw, 600px" priority={false} />
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Web + mobile products: the app gets its own stage, in a device frame */}
         {c.mobile && appScreen && (

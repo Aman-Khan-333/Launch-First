@@ -5545,12 +5545,13 @@ html.has-modal {
   object-position: 50% 50%;
 }
 
-/* Browser window: runs off the bottom (and right) edge of the scene */
+/* Browser window: the whole screenshot, centred inside the scene with room all round. The screenshots are
+   about square (850x844), so the window's width is set from the scene's height: 84% of it, less the bar. */
 .scene__window {
   position: absolute;
-  top: 11%;
-  left: 8%;
-  width: 84%;
+  top: 5.5cqw;
+  left: 22.8cqw;
+  width: 54.4cqw;
   overflow: hidden;
   border-radius: 1.6cqw;
   background: #fff;
@@ -5561,20 +5562,19 @@ html.has-modal {
 }
 
 .scene--hero .scene__window {
-  top: 10%;
-  left: 16%;
-  width: 68%;
+  top: 4cqw;
+  left: 30cqw;
+  width: 40cqw;
   border-radius: 1cqw;
 }
 
+/* A web product with one phone screen: window to the left, phone to the right */
 .scene--combo .scene__window {
-  left: 6%;
-  width: 70%;
+  left: 12cqw;
 }
 
 .scene--hero.scene--combo .scene__window {
-  left: 10%;
-  width: 60%;
+  left: 22cqw;
 }
 
 .scene__bar {
@@ -6169,6 +6169,61 @@ html.has-modal {
   font-variant-numeric: tabular-nums;
 }
 
+/* The web dashboard of a web + mobile product, shown whole on the project's backdrop */
+.cs2-web {
+  padding: 56px 0;
+}
+
+.cs2-web__stage {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.cs2-web__frame {
+  padding: 48px;
+  border-radius: 26px;
+  background:
+    radial-gradient(120% 90% at 18% 0%, rgba(255, 255, 255, 0.7), transparent 60%),
+    linear-gradient(135deg, var(--t1), var(--t2));
+}
+
+.cs2-web__frame .scene__window {
+  position: static;
+  width: 100%;
+  border-radius: 14px;
+}
+
+.cs2-web__frame .scene__bar {
+  height: 28px;
+  gap: 7px;
+  padding: 0 14px;
+}
+
+.cs2-web__frame .scene__bar i {
+  width: 9px;
+  height: 9px;
+}
+
+@media (max-width: 1100px) {
+  .cs2-web__stage {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .cs2-web {
+    padding: 36px 0;
+  }
+
+  .cs2-web__frame {
+    padding: 20px;
+    border-radius: 20px;
+  }
+}
+
 /* The app of a web + mobile product: a phone on the project's backdrop, with its story beside it */
 .cs2-app {
   display: grid;
@@ -6318,6 +6373,12 @@ html.has-modal {
   .scene--hero {
     aspect-ratio: 16 / 10;
   }
+
+  .scene--hero .scene__window {
+    top: 5cqw;
+    left: 24.8cqw;
+    width: 50.4cqw;
+  }
 }
 
 @media (max-width: 760px) {
@@ -6336,13 +6397,13 @@ html.has-modal {
   }
 
   .scene--hero .scene__window {
-    left: 8%;
-    width: 84%;
+    top: 6cqw;
+    left: 20.5cqw;
+    width: 59cqw;
   }
 
   .scene--hero.scene--combo .scene__window {
-    left: 6%;
-    width: 70%;
+    left: 8cqw;
   }
 
   .scene--hero .phone--float {
